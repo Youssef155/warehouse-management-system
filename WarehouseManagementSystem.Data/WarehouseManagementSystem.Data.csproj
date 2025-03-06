@@ -16,8 +16,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\WarehouseManagementSystem.Core\WarehouseManagementSystem.Core.csproj" />
-  </ItemGroup>
-
 </Project>
