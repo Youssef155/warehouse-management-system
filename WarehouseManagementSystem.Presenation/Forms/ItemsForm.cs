@@ -10,7 +10,9 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using WarehouseManagementSystem.Business.Interfaces;
 using WarehouseManagementSystem.Business.Services;
+using WarehouseManagementSystem.Data;
 using WarehouseManagementSystem.Data.Models;
+using WarehouseManagementSystem.Data.UOW;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace WarehouseManagementSystem.Presenation.Forms
@@ -21,6 +23,8 @@ namespace WarehouseManagementSystem.Presenation.Forms
         public ItemsForm()
         {
             InitializeComponent();
+            _itemService = new ItemService(new UnitOfWork(new WMSDbContext()));
+            LoadItems();
             cmbUnit.Items.AddRange(new string[] { "Piece", "Kg", "Liter", "Meter" });
             cmbUnit.SelectedIndex = 0;
         }

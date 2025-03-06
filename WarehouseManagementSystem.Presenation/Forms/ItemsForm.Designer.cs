@@ -44,6 +44,7 @@
             // dgvItems
             // 
             dgvItems.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvItems.BackgroundColor = SystemColors.Window;
             dgvItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvItems.Location = new Point(12, 231);
             dgvItems.Name = "dgvItems";
