@@ -17,7 +17,10 @@ public class ItemService : IItemService
         _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<Item> GetAllItems() => _unitOfWork.Items.GetAll();
+    public IEnumerable<Item> GetAllItems()
+    {
+        return _unitOfWork.Items.GetAll();
+    }
 
     public Item GetItemById(int id) => _unitOfWork.Items.GetById(id);
 
