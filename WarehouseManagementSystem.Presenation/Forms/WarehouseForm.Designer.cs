@@ -46,37 +46,37 @@
             dgvWarehouses.BackgroundColor = SystemColors.Window;
             dgvWarehouses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvWarehouses.GridColor = Color.Gray;
-            dgvWarehouses.Location = new Point(12, 12);
+            dgvWarehouses.Location = new Point(6, 89);
             dgvWarehouses.Name = "dgvWarehouses";
             dgvWarehouses.RowHeadersWidth = 51;
-            dgvWarehouses.Size = new Size(776, 255);
+            dgvWarehouses.Size = new Size(844, 379);
             dgvWarehouses.TabIndex = 0;
             // 
             // txtName
             // 
-            txtName.Location = new Point(12, 314);
+            txtName.Location = new Point(6, 29);
             txtName.Name = "txtName";
-            txtName.Size = new Size(239, 27);
+            txtName.Size = new Size(166, 27);
             txtName.TabIndex = 1;
             // 
             // txtManager
             // 
-            txtManager.Location = new Point(549, 314);
+            txtManager.Location = new Point(350, 29);
             txtManager.Name = "txtManager";
-            txtManager.Size = new Size(239, 27);
+            txtManager.Size = new Size(166, 27);
             txtManager.TabIndex = 2;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(282, 314);
+            txtAddress.Location = new Point(178, 29);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(239, 27);
+            txtAddress.Size = new Size(166, 27);
             txtAddress.TabIndex = 3;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 291);
+            label1.Location = new Point(10, 6);
             label1.Name = "label1";
             label1.Size = new Size(49, 20);
             label1.TabIndex = 4;
@@ -85,7 +85,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(282, 291);
+            label2.Location = new Point(187, 4);
             label2.Name = "label2";
             label2.Size = new Size(62, 20);
             label2.TabIndex = 5;
@@ -94,7 +94,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(549, 291);
+            label3.Location = new Point(350, 4);
             label3.Name = "label3";
             label3.Size = new Size(68, 20);
             label3.TabIndex = 6;
@@ -104,7 +104,7 @@
             // 
             btnAdd.BackColor = Color.Lime;
             btnAdd.ForeColor = SystemColors.ActiveCaptionText;
-            btnAdd.Location = new Point(157, 378);
+            btnAdd.Location = new Point(556, 27);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(94, 29);
             btnAdd.TabIndex = 7;
@@ -116,7 +116,7 @@
             // 
             btnDelete.BackColor = Color.Red;
             btnDelete.ForeColor = SystemColors.ButtonHighlight;
-            btnDelete.Location = new Point(549, 378);
+            btnDelete.Location = new Point(756, 27);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(94, 29);
             btnDelete.TabIndex = 8;
@@ -128,7 +128,7 @@
             // 
             btnUpdate.BackColor = Color.DodgerBlue;
             btnUpdate.ForeColor = SystemColors.Control;
-            btnUpdate.Location = new Point(351, 378);
+            btnUpdate.Location = new Point(656, 27);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(94, 29);
             btnUpdate.TabIndex = 9;
@@ -140,7 +140,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(864, 478);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
