@@ -10,7 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WarehouseManagementSystem.Core\WarehouseManagementSystem.Core.csproj" />
     <ProjectReference Include="..\WarehouseManagementSystem.Data\WarehouseManagementSystem.Data.csproj" />
-    <ProjectReference Include="..\WarehouseManagementSystem.Infrastructure\WarehouseManagementSystem.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
