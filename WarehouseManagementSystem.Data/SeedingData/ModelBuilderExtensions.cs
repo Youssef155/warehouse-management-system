@@ -31,15 +31,15 @@ public static class ModelBuilderExtensions
         );
 
         modelBuilder.Entity<SupplyOrder>().HasData(
-            new SupplyOrder { Id = 1, WarehouseId = 1, SupplierId = 1, OrderNumber = "SO001", OrderDate = DateTime.UtcNow }
+            new SupplyOrder { Id = 1, WarehouseId = 1, SupplierId = 1, OrderNumber = "SO001", OrderDate = new DateTime(2024, 3, 6) }
         );
 
         modelBuilder.Entity<SupplyOrderDetail>().HasData(
-            new SupplyOrderDetail { SupplyOrderId = 1, ItemId = 1, Quantity = 10, ProductionDate = DateTime.UtcNow.AddMonths(-1), ShelfLifeDays = 365 }
+            new SupplyOrderDetail { SupplyOrderId = 1, ItemId = 1, Quantity = 10, ProductionDate = new DateTime(2024, 2, 6), ShelfLifeDays = 365 }
         );
 
         modelBuilder.Entity<WithdrawalOrder>().HasData(
-            new WithdrawalOrder { Id = 1, WarehouseId = 1, CustomerId = 1, OrderNumber = "WO001", OrderDate = DateTime.UtcNow }
+            new WithdrawalOrder { Id = 1, WarehouseId = 1, CustomerId = 1, OrderNumber = "WO001", OrderDate = new DateTime(2024, 3, 6) }
         );
 
         modelBuilder.Entity<WithdrawalOrderDetail>().HasData(

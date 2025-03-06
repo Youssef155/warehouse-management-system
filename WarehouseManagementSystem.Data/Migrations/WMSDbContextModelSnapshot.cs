@@ -56,7 +56,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(1634),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(6634),
                             Email = "john@electronics.com",
                             Name = "John Electronics",
                             Phone = "987-654"
@@ -98,7 +98,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                         {
                             Id = 1,
                             Code = "ITM001",
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 19, DateTimeKind.Utc).AddTicks(7785),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(3335),
                             MeasurementUnit = "Piece",
                             Name = "Laptop"
                         });
@@ -135,7 +135,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                         {
                             WarehouseId = 1,
                             ItemId = 1,
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(2648),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(7545),
                             Id = 0,
                             Quantity = 50
                         });
@@ -227,7 +227,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 19, DateTimeKind.Utc).AddTicks(9589),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(4745),
                             Email = "contact@techsupplier.com",
                             Fax = "123-457",
                             Mobile = "123456789",
@@ -276,8 +276,8 @@ namespace WarehouseManagementSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(4011),
-                            OrderDate = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(4617),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(9464),
+                            OrderDate = new DateTime(2024, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderNumber = "SO001",
                             SupplierId = 1,
                             WarehouseId = 1
@@ -321,9 +321,9 @@ namespace WarehouseManagementSystem.Data.Migrations
                         {
                             SupplyOrderId = 1,
                             ItemId = 1,
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(5194),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 238, DateTimeKind.Utc).AddTicks(5819),
                             Id = 0,
-                            ProductionDate = new DateTime(2025, 2, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(5769),
+                            ProductionDate = new DateTime(2024, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Quantity = 10,
                             ShelfLifeDays = 365
                         });
@@ -364,7 +364,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                         {
                             Id = 1,
                             Address = "123 Street, City",
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 19, DateTimeKind.Utc).AddTicks(2439),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 236, DateTimeKind.Utc).AddTicks(8381),
                             Manager = "John Doe",
                             Name = "Main Warehouse"
                         });
@@ -409,9 +409,9 @@ namespace WarehouseManagementSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(7059),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 238, DateTimeKind.Utc).AddTicks(8638),
                             CustomerId = 1,
-                            OrderDate = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(7656),
+                            OrderDate = new DateTime(2024, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderNumber = "WO001",
                             WarehouseId = 1
                         });
@@ -448,7 +448,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                         {
                             WithdrawalOrderId = 1,
                             ItemId = 1,
-                            CreatedAt = new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(8255),
+                            CreatedAt = new DateTime(2025, 3, 6, 6, 51, 33, 239, DateTimeKind.Utc).AddTicks(71),
                             Id = 0,
                             Quantity = 5
                         });
@@ -478,7 +478,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                     b.HasOne("WarehouseManagementSystem.Data.Models.Warehouse", "FromWarehouse")
                         .WithMany()
                         .HasForeignKey("FromWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("WarehouseManagementSystem.Data.Models.Item", "Item")
@@ -490,7 +490,7 @@ namespace WarehouseManagementSystem.Data.Migrations
                     b.HasOne("WarehouseManagementSystem.Data.Models.Warehouse", "ToWarehouse")
                         .WithMany()
                         .HasForeignKey("ToWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("FromWarehouse");

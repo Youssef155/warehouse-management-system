@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WarehouseManagementSystem.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -138,13 +138,13 @@ namespace WarehouseManagementSystem.Data.Migrations
                         column: x => x.FromWarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StockTransfers_Warehouses_ToWarehouseId",
                         column: x => x.ToWarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -268,47 +268,47 @@ namespace WarehouseManagementSystem.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "Id", "CreatedAt", "Email", "Name", "Phone", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(1634), "john@electronics.com", "John Electronics", "987-654", null });
+                values: new object[] { 1, new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(6634), "john@electronics.com", "John Electronics", "987-654", null });
 
             migrationBuilder.InsertData(
                 table: "Items",
                 columns: new[] { "Id", "Code", "CreatedAt", "MeasurementUnit", "Name", "UpdatedAt" },
-                values: new object[] { 1, "ITM001", new DateTime(2025, 3, 6, 5, 47, 40, 19, DateTimeKind.Utc).AddTicks(7785), "Piece", "Laptop", null });
+                values: new object[] { 1, "ITM001", new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(3335), "Piece", "Laptop", null });
 
             migrationBuilder.InsertData(
                 table: "Suppliers",
                 columns: new[] { "Id", "CreatedAt", "Email", "Fax", "Mobile", "Name", "Phone", "UpdatedAt", "Website" },
-                values: new object[] { 1, new DateTime(2025, 3, 6, 5, 47, 40, 19, DateTimeKind.Utc).AddTicks(9589), "contact@techsupplier.com", "123-457", "123456789", "TechSupplier Inc.", "123-456", null, "www.techsupplier.com" });
+                values: new object[] { 1, new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(4745), "contact@techsupplier.com", "123-457", "123456789", "TechSupplier Inc.", "123-456", null, "www.techsupplier.com" });
 
             migrationBuilder.InsertData(
                 table: "Warehouses",
                 columns: new[] { "Id", "Address", "CreatedAt", "Manager", "Name", "UpdatedAt" },
-                values: new object[] { 1, "123 Street, City", new DateTime(2025, 3, 6, 5, 47, 40, 19, DateTimeKind.Utc).AddTicks(2439), "John Doe", "Main Warehouse", null });
+                values: new object[] { 1, "123 Street, City", new DateTime(2025, 3, 6, 6, 51, 33, 236, DateTimeKind.Utc).AddTicks(8381), "John Doe", "Main Warehouse", null });
 
             migrationBuilder.InsertData(
                 table: "StockItems",
                 columns: new[] { "ItemId", "WarehouseId", "CreatedAt", "Id", "Quantity", "UpdatedAt" },
-                values: new object[] { 1, 1, new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(2648), 0, 50, null });
+                values: new object[] { 1, 1, new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(7545), 0, 50, null });
 
             migrationBuilder.InsertData(
                 table: "SupplyOrders",
                 columns: new[] { "Id", "CreatedAt", "OrderDate", "OrderNumber", "SupplierId", "UpdatedAt", "WarehouseId" },
-                values: new object[] { 1, new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(4011), new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(4617), "SO001", 1, null, 1 });
+                values: new object[] { 1, new DateTime(2025, 3, 6, 6, 51, 33, 237, DateTimeKind.Utc).AddTicks(9464), new DateTime(2024, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "SO001", 1, null, 1 });
 
             migrationBuilder.InsertData(
                 table: "WithdrawalOrders",
                 columns: new[] { "Id", "CreatedAt", "CustomerId", "OrderDate", "OrderNumber", "UpdatedAt", "WarehouseId" },
-                values: new object[] { 1, new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(7059), 1, new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(7656), "WO001", null, 1 });
+                values: new object[] { 1, new DateTime(2025, 3, 6, 6, 51, 33, 238, DateTimeKind.Utc).AddTicks(8638), 1, new DateTime(2024, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "WO001", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "SupplyOrderDetail",
                 columns: new[] { "ItemId", "SupplyOrderId", "CreatedAt", "Id", "ProductionDate", "Quantity", "ShelfLifeDays", "UpdatedAt" },
-                values: new object[] { 1, 1, new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(5194), 0, new DateTime(2025, 2, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(5769), 10, 365, null });
+                values: new object[] { 1, 1, new DateTime(2025, 3, 6, 6, 51, 33, 238, DateTimeKind.Utc).AddTicks(5819), 0, new DateTime(2024, 2, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 10, 365, null });
 
             migrationBuilder.InsertData(
                 table: "WithdrawalOrderDetail",
                 columns: new[] { "ItemId", "WithdrawalOrderId", "CreatedAt", "Id", "Quantity", "UpdatedAt" },
-                values: new object[] { 1, 1, new DateTime(2025, 3, 6, 5, 47, 40, 20, DateTimeKind.Utc).AddTicks(8255), 0, 5, null });
+                values: new object[] { 1, 1, new DateTime(2025, 3, 6, 6, 51, 33, 239, DateTimeKind.Utc).AddTicks(71), 0, 5, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockItems_ItemId",
