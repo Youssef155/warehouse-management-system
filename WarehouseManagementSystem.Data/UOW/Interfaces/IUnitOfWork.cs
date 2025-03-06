@@ -9,5 +9,8 @@ public interface IUnitOfWork : IDisposable
     IRepository<Item> Items { get; }
     IRepository<Supplier> Suppliers { get; }
     IRepository<Customer> Customers { get; }
+    IRepository<SupplyOrder> SupplyOrders { get; }
+    IRepository<WithdrawalOrder> WithdrawalOrders { get; }
+    IRepository<StockTransfer> StockTransfers { get; }
     void Save();
 }
