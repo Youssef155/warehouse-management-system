@@ -43,34 +43,36 @@
             // 
             // dgvWarehouses
             // 
+            dgvWarehouses.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvWarehouses.BackgroundColor = SystemColors.Window;
             dgvWarehouses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvWarehouses.GridColor = Color.Gray;
-            dgvWarehouses.Location = new Point(6, 89);
+            dgvWarehouses.Location = new Point(0, 184);
             dgvWarehouses.Name = "dgvWarehouses";
             dgvWarehouses.RowHeadersWidth = 51;
-            dgvWarehouses.Size = new Size(844, 379);
+            dgvWarehouses.Size = new Size(864, 294);
             dgvWarehouses.TabIndex = 0;
+            dgvWarehouses.Click += dgvWarehouses_Click;
             // 
             // txtName
             // 
             txtName.Location = new Point(6, 29);
             txtName.Name = "txtName";
-            txtName.Size = new Size(166, 27);
+            txtName.Size = new Size(682, 27);
             txtName.TabIndex = 1;
             // 
             // txtManager
             // 
-            txtManager.Location = new Point(350, 29);
+            txtManager.Location = new Point(478, 112);
             txtManager.Name = "txtManager";
-            txtManager.Size = new Size(166, 27);
+            txtManager.Size = new Size(210, 27);
             txtManager.TabIndex = 2;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(178, 29);
+            txtAddress.Location = new Point(10, 109);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(166, 27);
+            txtAddress.Size = new Size(447, 27);
             txtAddress.TabIndex = 3;
             // 
             // label1
@@ -85,7 +87,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(187, 4);
+            label2.Location = new Point(10, 86);
             label2.Name = "label2";
             label2.Size = new Size(62, 20);
             label2.TabIndex = 5;
@@ -94,7 +96,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(350, 4);
+            label3.Location = new Point(478, 87);
             label3.Name = "label3";
             label3.Size = new Size(68, 20);
             label3.TabIndex = 6;
@@ -102,9 +104,10 @@
             // 
             // btnAdd
             // 
+            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAdd.BackColor = Color.Lime;
             btnAdd.ForeColor = SystemColors.ActiveCaptionText;
-            btnAdd.Location = new Point(556, 27);
+            btnAdd.Location = new Point(758, 29);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(94, 29);
             btnAdd.TabIndex = 7;
@@ -114,9 +117,10 @@
             // 
             // btnDelete
             // 
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnDelete.BackColor = Color.Red;
             btnDelete.ForeColor = SystemColors.ButtonHighlight;
-            btnDelete.Location = new Point(756, 27);
+            btnDelete.Location = new Point(758, 126);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(94, 29);
             btnDelete.TabIndex = 8;
@@ -126,9 +130,10 @@
             // 
             // btnUpdate
             // 
+            btnUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnUpdate.BackColor = Color.DodgerBlue;
             btnUpdate.ForeColor = SystemColors.Control;
-            btnUpdate.Location = new Point(656, 27);
+            btnUpdate.Location = new Point(758, 79);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(94, 29);
             btnUpdate.TabIndex = 9;

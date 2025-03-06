@@ -29,13 +29,29 @@ public partial class WarehouseForm : Form
         dgvWarehouses.DataSource = _warehouseService.GetAllWarehouses().ToList();
     }
 
+    private void ResetFormInput()
+    {
+        txtName.Text = string.Empty;
+        txtAddress.Text = string.Empty;
+        txtManager.Text = string.Empty;
+    }
+
+    private void FillFrom(int id)
+    {
+        var warehouse = _warehouseService.GetWarehouseById(id);
+        txtManager.Text = warehouse.Manager;
+        txtName.Text = warehouse.Name;
+        txtAddress.Text = warehouse.Address;
+    }
+
     private void btnAdd_Click(object sender, EventArgs e)
     {
         try
         {
             _warehouseService.AddWarehouse(txtName.Text, txtAddress.Text, txtManager.Text);
-            MessageBox.Show("Warehouse added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Warehouse added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadWarehouses(); // Refresh DataGridView
+            ResetFormInput();
         }
         catch (Exception ex)
         {
@@ -54,6 +70,7 @@ public partial class WarehouseForm : Form
                 _warehouseService.UpdateWarehouse(id, txtName.Text, txtAddress.Text, txtManager.Text);
                 MessageBox.Show("Warehouse updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadWarehouses();
+                ResetFormInput();
             }
             catch (Exception ex)
             {
@@ -83,5 +100,11 @@ public partial class WarehouseForm : Form
                 }
             }
         }
+    }
+
+    private void dgvWarehouses_Click(object sender, EventArgs e)
+    {
+        int id = Convert.ToInt32(dgvWarehouses.SelectedRows[0].Cells["Id"].Value);
+        FillFrom(id);
     }
 }
