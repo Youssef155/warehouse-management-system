@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WarehouseManagementSystem.Business\WarehouseManagementSystem.Business.csproj" />
-    <ProjectReference Include="..\WarehouseManagementSystem.Core\WarehouseManagementSystem.Core.csproj" />
   </ItemGroup>
 
 </Project>
