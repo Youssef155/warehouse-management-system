@@ -13,7 +13,7 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<Supplier> Suppliers { get; }
     public IRepository<Customer> Customers { get; }
     public IRepository<SupplyOrder> SupplyOrders {  get; }
-
+    public IRepository<WithdrawalOrder> WithdrawalOrders { get; }
     public UnitOfWork(WMSDbContext context)
     {
         _context = context;
@@ -22,6 +22,7 @@ public class UnitOfWork : IUnitOfWork
         Suppliers = new Repository<Supplier>(_context);
         Customers = new Repository<Customer>(_context);
         SupplyOrders = new Repository<SupplyOrder>(_context);
+        WithdrawalOrders = new Repository<WithdrawalOrder>(_context);
     }
 
     public void Save() => _context.SaveChanges();
