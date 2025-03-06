@@ -86,6 +86,7 @@ public partial class MainForm : Form
     private void btnItems_Click(object sender, EventArgs e)
     {
         ActivateBtn(sender);
+        OpenChildForm(new ItemsForm());
     }
 
     private void btnSupplier_Click(object sender, EventArgs e)
