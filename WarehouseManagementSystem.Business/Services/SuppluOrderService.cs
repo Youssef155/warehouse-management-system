@@ -17,11 +17,13 @@ public class SupplyOrderService : ISupplyOrderService
         _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<SupplyOrder> GetAllSupplyOrders() => _unitOfWork.SupplyOrders.GetAll();
+    public async Task<IEnumerable<SupplyOrder>> GetAllSupplyOrdersAsync() => 
+        await _unitOfWork.SupplyOrders.GetAllAsync();
 
-    public SupplyOrder GetSupplyOrderById(int id) => _unitOfWork.SupplyOrders.GetById(id);
+    public async Task<SupplyOrder> GetSupplyOrderByIdAsync(int id) => 
+        await _unitOfWork.SupplyOrders.GetByIdAsync(id);
 
-    public void CreateSupplyOrder(int warehouseId, int supplierId, string orderNumber, DateTime orderDate, List<SupplyOrderDetail> details)
+    public async Task CreateSupplyOrderAsync(int warehouseId, int supplierId, string orderNumber, DateTime orderDate, List<SupplyOrderDetail> details)
     {
         if (details == null || details.Count == 0)
             throw new ArgumentException("Supply order must have at least one item.");
@@ -35,7 +37,7 @@ public class SupplyOrderService : ISupplyOrderService
             SupplyOrderDetails = details
         };
 
-        _unitOfWork.SupplyOrders.Add(supplyOrder);
-        _unitOfWork.Save();
+        await _unitOfWork.SupplyOrders.AddAsync(supplyOrder);
+        await _unitOfWork.SaveAsync();
     }
 }

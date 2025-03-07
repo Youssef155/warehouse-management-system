@@ -17,29 +17,29 @@ public class WarehouseService : IWarehouseService
         _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<Warehouse> GetAllWarehouses()
+    public async Task<IEnumerable<Warehouse>> GetAllWarehousesAsync()
     {
-        return _unitOfWork.Warehouses.GetAll();
+        return await _unitOfWork.Warehouses.GetAllAsync();
     }
 
-    public Warehouse GetWarehouseById(int id)
+    public async Task<Warehouse> GetWarehouseByIdAsync(int id)
     {
-        return _unitOfWork.Warehouses.GetById(id);
+        return await _unitOfWork.Warehouses.GetByIdAsync(id);
     }
 
-    public void AddWarehouse(string name, string address, string manager)
+    public async Task AddWarehouseAsync(string name, string address, string manager)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Warehouse name cannot be empty.");
 
         var warehouse = new Warehouse { Name = name, Address = address, Manager = manager };
-        _unitOfWork.Warehouses.Add(warehouse);
-        _unitOfWork.Save();
+        await _unitOfWork.Warehouses.AddAsync(warehouse);
+        await _unitOfWork.SaveAsync();
     }
 
-    public void UpdateWarehouse(int id, string name, string address, string manager)
+    public async Task UpdateWarehouseAsync(int id, string name, string address, string manager)
     {
-        var warehouse = _unitOfWork.Warehouses.GetById(id);
+        var warehouse = await _unitOfWork.Warehouses.GetByIdAsync(id);
         if (warehouse == null)
             throw new Exception("Warehouse not found.");
 
@@ -47,17 +47,17 @@ public class WarehouseService : IWarehouseService
         warehouse.Address = address;
         warehouse.Manager = manager;
 
-        _unitOfWork.Warehouses.Update(warehouse);
-        _unitOfWork.Save();
+        await _unitOfWork.Warehouses.UpdateAsync(warehouse);
+        await _unitOfWork.SaveAsync();
     }
 
-    public void DeleteWarehouse(int id)
+    public async Task DeleteWarehouseAsync(int id)
     {
-        var warehouse = _unitOfWork.Warehouses.GetById(id);
+        var warehouse = await _unitOfWork.Warehouses.GetByIdAsync(id);
         if (warehouse == null)
             throw new Exception("Warehouse not found.");
 
-        _unitOfWork.Warehouses.Delete(warehouse);
-        _unitOfWork.Save();
+        await _unitOfWork.Warehouses.DeleteAsync(warehouse);
+        await _unitOfWork.SaveAsync();
     }
 }
