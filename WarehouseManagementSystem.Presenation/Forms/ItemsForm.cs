@@ -59,7 +59,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
         {
             if (dgvItems.SelectedRows.Count > 0)
             {
-                int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["Id"].Value);
+                int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["ItemId"].Value);
                 var item = await _itemService.GetItemByIdAsync(id);
 
                 item.Name = txtName.Text;
@@ -74,7 +74,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
 
         private void dgvItems_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["Id"].Value);
+            int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["ItemId"].Value);
             FillFrom(id);
         }
     }

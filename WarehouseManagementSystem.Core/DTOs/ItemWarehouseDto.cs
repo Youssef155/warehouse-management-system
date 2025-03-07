@@ -8,6 +8,7 @@ namespace WarehouseManagementSystem.Core.DTOs;
 
 public class ItemWarehouseDto
 {
+    public int ItemId { get; set; }
     public string ItemName { get; set; }
     public string WarehouseName { get; set; }
     public int Quantity { get; set; }

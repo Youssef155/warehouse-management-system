@@ -30,6 +30,7 @@ public class ItemService : IItemService
 
         var result = stockItems.Select(s => new ItemWarehouseDto
         {
+            ItemId = s.Item.Id,
             ItemName = s.Item.Name,
             WarehouseName = s.Warehouse.Name,
             Quantity = s.Quantity,
