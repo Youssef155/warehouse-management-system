@@ -27,7 +27,7 @@ public class UnitOfWork : IUnitOfWork
         StockTransfers = new Repository<StockTransfer>(_context);
     }
 
-    public void Save() => _context.SaveChanges();
+    public async Task SaveAsync() => await _context.SaveChangesAsync();
 
-    public void Dispose() => _context.Dispose();
+    public async Task Dispose() => await _context.DisposeAsync();
 }
