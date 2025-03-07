@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using WarehouseManagementSystem.Business.Interfaces;
 using WarehouseManagementSystem.Core.DTOs;
@@ -35,12 +36,44 @@ public class ItemService : IItemService
             WarehouseName = s.Warehouse.Name,
             Quantity = s.Quantity,
             ItemCode = s.Item.Code,
-            ItemUnit = s.Item.MeasurementUnit
+            Units = s.Item.ItemUnits.Select(iu => new ItemUnitDto
+            {
+                UnitId = iu.Unit.Id,
+                UnitName = iu.Unit.Name,
+                ConversionFactor = iu.ConversionFactor
+            }).ToList()
         }).ToList();
 
         return result;
     }
 
+    public async Task<List<ItemWarehouseDto>> GetItemsByWarehousesAsync(List<int> warehouseIds)
+    {
+        var query = _unitOfWork.StockItemRepository
+        .GetQueryable()
+        .Where(s => warehouseIds.Contains(s.WarehouseId))
+        .Include(s => s.Item)
+        .Include(s => s.Warehouse);
+
+        var stockItems = await query.ToListAsync();
+
+        var result = stockItems.Select(s => new ItemWarehouseDto
+        {
+            ItemId = s.Item.Id,
+            ItemName = s.Item.Name,
+            WarehouseName = s.Warehouse.Name,
+            Quantity = s.Quantity,
+            ItemCode = s.Item.Code,
+            Units = s.Item.ItemUnits.Select(iu => new ItemUnitDto
+            {
+                UnitId = iu.Unit.Id,
+                UnitName = iu.Unit.Name,
+                ConversionFactor = iu.ConversionFactor
+            }).ToList()
+        }).ToList();
+
+        return result;
+    }
 
     public async Task<Item> GetItemByIdAsync(int id) => 
         await _unitOfWork.Items.GetByIdAsync(id);
@@ -52,6 +85,39 @@ public class ItemService : IItemService
 
         var item = new Item { Code = code, Name = name, MeasurementUnit = measurementUnit };
         await _unitOfWork.Items.AddAsync(item);
+        await _unitOfWork.SaveAsync();
+    }
+
+    public async Task AddNewItemToWarehouseAsync(string itemCode, string itemName, int warehouseId, int quantity, string measurementUnit)
+    {
+        if (string.IsNullOrWhiteSpace(itemName))
+            throw new ArgumentException("Item name cannot be empty.");
+
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be greater than zero.");
+
+        // Create a new item
+        var newItem = new Item
+        {
+            Code = itemCode,
+            Name = itemName,
+            MeasurementUnit = measurementUnit
+        };
+
+        // Add the new item to the database
+        await _unitOfWork.Items.AddAsync(newItem);
+        await _unitOfWork.SaveAsync();
+
+        // Create a stock entry for the warehouse
+        var stockItem = new StockItem
+        {
+            ItemId = newItem.Id,
+            WarehouseId = warehouseId,
+            Quantity = quantity
+        };
+
+        // Add stock item to the database
+        await _unitOfWork.StockItemRepository.AddAsync(stockItem);
         await _unitOfWork.SaveAsync();
     }
 

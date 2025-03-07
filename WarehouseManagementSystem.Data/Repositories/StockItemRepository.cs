@@ -18,6 +18,20 @@ public class StockItemRepository : Repository<StockItem>, IStockItemRepository
         _context = context;
     }
 
+    public async Task<List<StockItem>> GetItemsByWarehousesAsync(List<int> warehouseIds)
+    {
+        return await _context.StockItems
+        .Where(si => warehouseIds.Contains(si.WarehouseId))
+        .Include(si => si.Item)
+        .Include(si => si.Warehouse)
+        .ToListAsync();
+    }
+
+    public IQueryable<StockItem> GetQueryable()
+    {
+        return _dbSet.AsQueryable();
+    }
+
     public async Task<List<StockItem>> GetStockWithItemAndWarehouseAsync()
     {
         return await _context.StockItems
