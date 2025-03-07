@@ -24,9 +24,9 @@ public partial class WarehouseForm : Form
         LoadWarehouses();
     }
 
-    private void LoadWarehouses()
+    private async Task LoadWarehouses()
     {
-        dgvWarehouses.DataSource = _warehouseService.GetAllWarehouses().ToList();
+        dgvWarehouses.DataSource = await _warehouseService.GetAllWarehousesAsync();
     }
 
     private void ResetFormInput()
@@ -36,19 +36,19 @@ public partial class WarehouseForm : Form
         txtManager.Text = string.Empty;
     }
 
-    private void FillFrom(int id)
+    private async Task FillFrom(int id)
     {
-        var warehouse = _warehouseService.GetWarehouseById(id);
+        var warehouse = await _warehouseService.GetWarehouseByIdAsync(id);
         txtManager.Text = warehouse.Manager;
         txtName.Text = warehouse.Name;
         txtAddress.Text = warehouse.Address;
     }
 
-    private void btnAdd_Click(object sender, EventArgs e)
+    private async void btnAdd_Click(object sender, EventArgs e)
     {
         try
         {
-            _warehouseService.AddWarehouse(txtName.Text, txtAddress.Text, txtManager.Text);
+            await _warehouseService.AddWarehouseAsync(txtName.Text, txtAddress.Text, txtManager.Text);
             //MessageBox.Show("Warehouse added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadWarehouses(); // Refresh DataGridView
             ResetFormInput();
@@ -59,7 +59,7 @@ public partial class WarehouseForm : Form
         }
     }
 
-    private void btnUpdate_Click(object sender, EventArgs e)
+    private async void btnUpdate_Click(object sender, EventArgs e)
     {
         if (dgvWarehouses.SelectedRows.Count > 0)
         {
@@ -67,7 +67,7 @@ public partial class WarehouseForm : Form
 
             try
             {
-                _warehouseService.UpdateWarehouse(id, txtName.Text, txtAddress.Text, txtManager.Text);
+                await _warehouseService.UpdateWarehouseAsync(id, txtName.Text, txtAddress.Text, txtManager.Text);
                 MessageBox.Show("Warehouse updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadWarehouses();
                 ResetFormInput();
@@ -79,7 +79,7 @@ public partial class WarehouseForm : Form
         }
     }
 
-    private void btnDelete_Click(object sender, EventArgs e)
+    private async void btnDelete_Click(object sender, EventArgs e)
     {
         if (dgvWarehouses.SelectedRows.Count > 0)
         {
@@ -90,7 +90,7 @@ public partial class WarehouseForm : Form
             {
                 try
                 {
-                    _warehouseService.DeleteWarehouse(id);
+                    await _warehouseService.DeleteWarehouseAsync(id);
                     MessageBox.Show("Warehouse deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadWarehouses();
                 }

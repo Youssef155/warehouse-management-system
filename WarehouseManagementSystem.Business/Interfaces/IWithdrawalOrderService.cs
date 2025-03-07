@@ -7,7 +7,7 @@ namespace WarehouseManagementSystem.Business.Interfaces;
 
 public interface IWithdrawalOrderService
 {
-    IEnumerable<WithdrawalOrder> GetAllWithdrawalOrders();
-    WithdrawalOrder GetWithdrawalOrderById(int id);
-    void CreateWithdrawalOrder(int warehouseId, int customerId, string orderNumber, DateTime orderDate, List<WithdrawalOrderDetail> details);
+    Task<IEnumerable<WithdrawalOrder>> GetAllWithdrawalOrdersAsync();
+    Task<WithdrawalOrder> GetWithdrawalOrderByIdAsync(int id);
+    Task CreateWithdrawalOrderAsync(int warehouseId, int customerId, string orderNumber, DateTime orderDate, List<WithdrawalOrderDetail> details);
 }

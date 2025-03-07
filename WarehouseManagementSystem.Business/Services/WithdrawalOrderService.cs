@@ -17,11 +17,13 @@ public class WithdrawalOrderService : IWithdrawalOrderService
         _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<WithdrawalOrder> GetAllWithdrawalOrders() => _unitOfWork.WithdrawalOrders.GetAll();
+    public async Task<IEnumerable<WithdrawalOrder>> GetAllWithdrawalOrdersAsync() => 
+        await _unitOfWork.WithdrawalOrders.GetAllAsync();
 
-    public WithdrawalOrder GetWithdrawalOrderById(int id) => _unitOfWork.WithdrawalOrders.GetById(id);
+    public async Task<WithdrawalOrder> GetWithdrawalOrderByIdAsync(int id) =>
+        await _unitOfWork.WithdrawalOrders.GetByIdAsync(id);
 
-    public void CreateWithdrawalOrder(int warehouseId, int customerId, string orderNumber, DateTime orderDate, List<WithdrawalOrderDetail> details)
+    public async Task CreateWithdrawalOrderAsync(int warehouseId, int customerId, string orderNumber, DateTime orderDate, List<WithdrawalOrderDetail> details)
     {
         if (details == null || details.Count == 0)
             throw new ArgumentException("Withdrawal order must have at least one item.");
@@ -35,7 +37,7 @@ public class WithdrawalOrderService : IWithdrawalOrderService
             WithdrawalOrderDetails = details
         };
 
-        _unitOfWork.WithdrawalOrders.Add(withdrawalOrder);
-        _unitOfWork.Save();
+        await _unitOfWork.WithdrawalOrders.AddAsync(withdrawalOrder);
+        await _unitOfWork.SaveAsync();
     }
 }

@@ -17,42 +17,43 @@ public class ItemService : IItemService
         _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<Item> GetAllItems()
+    public async Task<IEnumerable<Item>> GetAllItemsAsync()
     {
-        return _unitOfWork.Items.GetAll();
+        return await _unitOfWork.Items.GetAllAsync();
     }
 
-    public Item GetItemById(int id) => _unitOfWork.Items.GetById(id);
+    public async Task<Item> GetItemByIdAsync(int id) => 
+        await _unitOfWork.Items.GetByIdAsync(id);
 
-    public void AddItem(string code, string name, string measurementUnit)
+    public async Task AddItemAsync(string code, string name, string measurementUnit)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Item name cannot be empty.");
 
         var item = new Item { Code = code, Name = name, MeasurementUnit = measurementUnit };
-        _unitOfWork.Items.Add(item);
-        _unitOfWork.Save();
+        await _unitOfWork.Items.AddAsync(item);
+        await _unitOfWork.SaveAsync();
     }
 
-    public void UpdateItem(int id, string code, string name, string measurementUnit)
+    public async Task UpdateItemAsync(int id, string code, string name, string measurementUnit)
     {
-        var item = _unitOfWork.Items.GetById(id);
+        var item = await _unitOfWork.Items.GetByIdAsync(id);
         if (item == null) throw new Exception("Item not found.");
 
         item.Code = code;
         item.Name = name;
         item.MeasurementUnit = measurementUnit;
 
-        _unitOfWork.Items.Update(item);
-        _unitOfWork.Save();
+        await _unitOfWork.Items.UpdateAsync(item);
+        await _unitOfWork.SaveAsync();
     }
 
-    public void DeleteItem(int id)
+    public async Task DeleteItemAsync(int id)
     {
-        var item = _unitOfWork.Items.GetById(id);
+        var item = await _unitOfWork.Items.GetByIdAsync(id);
         if (item == null) throw new Exception("Item not found.");
 
-        _unitOfWork.Items.Delete(item);
-        _unitOfWork.Save();
+        await _unitOfWork.Items.DeleteAsync(item);
+        await _unitOfWork.SaveAsync();
     }
 }

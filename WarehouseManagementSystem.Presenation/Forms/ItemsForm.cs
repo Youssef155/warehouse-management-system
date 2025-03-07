@@ -29,9 +29,9 @@ namespace WarehouseManagementSystem.Presenation.Forms
             cmbUnit.SelectedIndex = 0;
         }
 
-        private void LoadItems()
+        private async Task LoadItems()
         {
-            dgvItems.DataSource = _itemService.GetAllItems().ToList();
+            dgvItems.DataSource = await _itemService.GetAllItemsAsync();
         }
 
         private void ResetFormInput()
@@ -40,32 +40,32 @@ namespace WarehouseManagementSystem.Presenation.Forms
             txtCode.Text = string.Empty;
         }
 
-        private void FillFrom(int id)
+        private async Task FillFrom(int id)
         {
-            var item = _itemService.GetItemById(id);
+            var item = await _itemService.GetItemByIdAsync(id);
             txtCode.Text = item.Code;
             txtName.Text = item.Name;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private async void btnAdd_Click(object sender, EventArgs e)
         {
-            _itemService.AddItem(txtName.Text, txtCode.Text, cmbUnit.SelectedItem.ToString());
+            await _itemService.AddItemAsync(txtName.Text, txtCode.Text, cmbUnit.SelectedItem.ToString());
             LoadItems();
             ResetFormInput();
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private async void btnUpdate_Click(object sender, EventArgs e)
         {
             if (dgvItems.SelectedRows.Count > 0)
             {
                 int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["Id"].Value);
-                var item = _itemService.GetItemById(id);
+                var item = await _itemService.GetItemByIdAsync(id);
 
                 item.Name = txtName.Text;
                 item.Code = txtCode.Text;
                 item.MeasurementUnit = cmbUnit.SelectedItem.ToString();
 
-                _itemService.UpdateItem(id, item.Code, item.Name, item.MeasurementUnit);
+                await _itemService.UpdateItemAsync(id, item.Code, item.Name, item.MeasurementUnit);
                 LoadItems();
                 ResetFormInput();
             }

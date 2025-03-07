@@ -29,5 +29,5 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task SaveAsync() => await _context.SaveChangesAsync();
 
-    public async Task Dispose() => await _context.DisposeAsync();
+    public async void Dispose() => await _context.DisposeAsync();
 }

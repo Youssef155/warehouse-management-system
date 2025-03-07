@@ -16,39 +16,41 @@ public class CustomerService : ICustomerService
         _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<Customer> GetAllCustomers() => _unitOfWork.Customers.GetAll();
+    public async Task<IEnumerable<Customer>> GetAllCustomersAsync() =>
+        await _unitOfWork.Customers.GetAllAsync();
 
-    public Customer GetCustomerById(int id) => _unitOfWork.Customers.GetById(id);
+    public async Task<Customer> GetCustomerByIdAsync(int id) => 
+        await _unitOfWork.Customers.GetByIdAsync(id);
 
-    public void AddCustomer(string name, string phone, string email)
+    public async Task AddCustomerAsync(string name, string phone, string email)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Customer name cannot be empty.");
 
         var customer = new Customer { Name = name, Phone = phone, Email = email };
-        _unitOfWork.Customers.Add(customer);
-        _unitOfWork.Save();
+        await _unitOfWork.Customers.AddAsync(customer);
+        await _unitOfWork.SaveAsync();
     }
 
-    public void UpdateCustomer(int id, string name, string phone, string email)
+    public async Task UpdateCustomerAsync(int id, string name, string phone, string email)
     {
-        var customer = _unitOfWork.Customers.GetById(id);
+        var customer = await _unitOfWork.Customers.GetByIdAsync(id);
         if (customer == null) throw new Exception("Customer not found.");
 
         customer.Name = name;
         customer.Phone = phone;
         customer.Email = email;
 
-        _unitOfWork.Customers.Update(customer);
-        _unitOfWork.Save();
+        await _unitOfWork.Customers.UpdateAsync(customer);
+        await _unitOfWork.SaveAsync();
     }
 
-    public void DeleteCustomer(int id)
+    public async Task DeleteCustomerAsync(int id)
     {
-        var customer = _unitOfWork.Customers.GetById(id);
+        var customer = await _unitOfWork.Customers.GetByIdAsync(id);
         if (customer == null) throw new Exception("Customer not found.");
 
-        _unitOfWork.Customers.Delete(customer);
-        _unitOfWork.Save();
+        await _unitOfWork.Customers.DeleteAsync(customer);
+        await _unitOfWork.SaveAsync();
     }
 }
