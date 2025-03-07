@@ -25,7 +25,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
             InitializeComponent();
             _itemService = new ItemService(new UnitOfWork(new WMSDbContext()));
             LoadItems();
-            cmbUnit.Items.AddRange(new string[] { "Piece", "Kg", "Liter", "Meter" });
+            cmbUnit.Items.AddRange(new string[] { "", "Piece", "Kg", "Liter", "Meter" });
             cmbUnit.SelectedIndex = 0;
         }
 
@@ -49,6 +49,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
             var item = await _itemService.GetItemByIdAsync(id);
             txtCode.Text = item.Code;
             txtName.Text = item.Name;
+            cmbUnit.SelectedItem = item.MeasurementUnit;
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)

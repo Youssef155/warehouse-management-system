@@ -16,17 +16,25 @@ namespace WarehouseManagementSystem.Presenation.Forms;
 public partial class WarehouseForm : Form
 {
     private readonly WarehouseService _warehouseService;
+    private readonly UnitOfWork _unitOfWork;
 
     public WarehouseForm()
     {
         InitializeComponent();
         _warehouseService = new WarehouseService(new UnitOfWork(new WMSDbContext()));
+        _unitOfWork = new UnitOfWork(new WMSDbContext());
         LoadWarehouses();
     }
 
     private async Task LoadWarehouses()
     {
-        dgvWarehouses.DataSource = await _warehouseService.GetAllWarehousesAsync();
+        var warehouseList = await _unitOfWork.Warehouses.GetAllAsync();
+
+        dgvWarehouses.DataSource = warehouseList;
+
+        dgvWarehouses.Columns["Id"].Visible = false;
+        dgvWarehouses.AllowUserToDeleteRows = false;
+        dgvWarehouses.ReadOnly = true;
     }
 
     private void ResetFormInput()
@@ -104,7 +112,10 @@ public partial class WarehouseForm : Form
 
     private void dgvWarehouses_Click(object sender, EventArgs e)
     {
-        int id = Convert.ToInt32(dgvWarehouses.SelectedRows[0].Cells["Id"].Value);
-        FillFrom(id);
+        if (dgvWarehouses.SelectedRows.Count > 0)
+        {
+            int id = Convert.ToInt32(dgvWarehouses.SelectedRows[0].Cells["Id"].Value);
+            FillFrom(id);
+        }
     }
 }
