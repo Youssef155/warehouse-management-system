@@ -15,6 +15,8 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<SupplyOrder> SupplyOrders {  get; }
     public IRepository<WithdrawalOrder> WithdrawalOrders { get; }
     public IRepository<StockTransfer> StockTransfers { get; }
+    public IStockItemRepository StockItemRepository { get; }
+
     public UnitOfWork(WMSDbContext context)
     {
         _context = context;
@@ -25,6 +27,7 @@ public class UnitOfWork : IUnitOfWork
         SupplyOrders = new Repository<SupplyOrder>(_context);
         WithdrawalOrders = new Repository<WithdrawalOrder>(_context);
         StockTransfers = new Repository<StockTransfer>(_context);
+        StockItemRepository = new StockItemRepository(_context);
     }
 
     public async Task SaveAsync() => await _context.SaveChangesAsync();

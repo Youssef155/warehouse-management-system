@@ -25,13 +25,17 @@ namespace WarehouseManagementSystem.Presenation.Forms
             InitializeComponent();
             _itemService = new ItemService(new UnitOfWork(new WMSDbContext()));
             LoadItems();
-            cmbUnit.Items.AddRange(new string[] { "Piece", "Kg", "Liter", "Meter" });
+            cmbUnit.Items.AddRange(new string[] { "", "Piece", "Kg", "Liter", "Meter" });
             cmbUnit.SelectedIndex = 0;
         }
 
         private async Task LoadItems()
         {
-            dgvItems.DataSource = await _itemService.GetAllItemsAsync();
+            var itemsInWarehouses = await _itemService.GetItemsInWarehousesAsync();
+            dgvItems.DataSource = itemsInWarehouses;
+            dgvItems.Columns["ItemId"].Visible = false;
+            dgvItems.ReadOnly = true;
+            dgvItems.AllowUserToDeleteRows = false;
         }
 
         private void ResetFormInput()
@@ -45,6 +49,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
             var item = await _itemService.GetItemByIdAsync(id);
             txtCode.Text = item.Code;
             txtName.Text = item.Name;
+            cmbUnit.SelectedItem = item.MeasurementUnit;
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
@@ -58,7 +63,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
         {
             if (dgvItems.SelectedRows.Count > 0)
             {
-                int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["Id"].Value);
+                int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["ItemId"].Value);
                 var item = await _itemService.GetItemByIdAsync(id);
 
                 item.Name = txtName.Text;
@@ -73,8 +78,11 @@ namespace WarehouseManagementSystem.Presenation.Forms
 
         private void dgvItems_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["Id"].Value);
-            FillFrom(id);
+            if (dgvItems.SelectedRows.Count > 0) // Ensure a row is selected
+            {
+                int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["ItemId"].Value);
+                FillFrom(id);
+            }
         }
     }
 }
