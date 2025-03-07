@@ -19,5 +19,7 @@ public class StockTransfer : BaseEntity
 
     public int Quantity { get; set; }
     public DateTime TransferDate { get; set; }
+    public ICollection<StockTransferDetail> StockTransferDetails { get; set; }
+
 }
 
