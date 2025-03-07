@@ -25,6 +25,7 @@ public class WMSDbContext : DbContext
     public DbSet<SupplyOrder> SupplyOrders { get; set; }
     public DbSet<WithdrawalOrder> WithdrawalOrders { get; set; }
     public DbSet<StockTransfer> StockTransfers { get; set; }
+    public DbSet<StockTransferDetail> StockTransferDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -57,7 +58,7 @@ public class WMSDbContext : DbContext
             .WithMany(u => u.ItemUnits)
             .HasForeignKey(iu => iu.UnitId);
 
-        // 🔹 Fix Foreign Key Issue for `StockTransfers`
+        // Fix Foreign Key Issue for `StockTransfers`
         modelBuilder.Entity<StockTransfer>()
             .HasOne(st => st.FromWarehouse)
             .WithMany()
@@ -69,6 +70,18 @@ public class WMSDbContext : DbContext
             .WithMany()
             .HasForeignKey(st => st.ToWarehouseId)
             .OnDelete(DeleteBehavior.Restrict); // Prevents cascade delete
+
+        modelBuilder.Entity<StockTransferDetail>()
+            .HasOne(d => d.StockTransfer)
+            .WithMany(t => t.StockTransferDetails)
+            .HasForeignKey(d => d.StockTransferId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<StockTransferDetail>()
+            .HasOne(d => d.Item)
+            .WithMany()
+            .HasForeignKey(d => d.ItemId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Data Seeding
         modelBuilder.SeedData();
