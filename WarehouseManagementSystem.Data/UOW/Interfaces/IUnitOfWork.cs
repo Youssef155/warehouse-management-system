@@ -12,5 +12,5 @@ public interface IUnitOfWork : IDisposable
     IRepository<SupplyOrder> SupplyOrders { get; }
     IRepository<WithdrawalOrder> WithdrawalOrders { get; }
     IRepository<StockTransfer> StockTransfers { get; }
-    void Save();
+    Task SaveAsync();
 }
