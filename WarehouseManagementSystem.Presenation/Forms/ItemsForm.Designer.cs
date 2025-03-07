@@ -38,6 +38,12 @@
             btnUpdate = new Button();
             btnDelete = new Button();
             btnAdd = new Button();
+            label4 = new Label();
+            clbWarehouses = new CheckedListBox();
+            label5 = new Label();
+            cmbWarehouse = new ComboBox();
+            label6 = new Label();
+            txtQuantity = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgvItems).BeginInit();
             SuspendLayout();
             // 
@@ -46,10 +52,10 @@
             dgvItems.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvItems.BackgroundColor = SystemColors.Window;
             dgvItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvItems.Location = new Point(12, 231);
+            dgvItems.Location = new Point(12, 367);
             dgvItems.Name = "dgvItems";
             dgvItems.RowHeadersWidth = 51;
-            dgvItems.Size = new Size(1004, 188);
+            dgvItems.Size = new Size(1004, 132);
             dgvItems.TabIndex = 0;
             dgvItems.Click += dgvItems_Click;
             // 
@@ -140,11 +146,68 @@
             btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(17, 222);
+            label4.Name = "label4";
+            label4.Size = new Size(143, 20);
+            label4.TabIndex = 14;
+            label4.Text = "Filter by warehouses";
+            // 
+            // clbWarehouses
+            // 
+            clbWarehouses.FormattingEnabled = true;
+            clbWarehouses.Location = new Point(166, 219);
+            clbWarehouses.Name = "clbWarehouses";
+            clbWarehouses.Size = new Size(187, 114);
+            clbWarehouses.TabIndex = 15;
+            clbWarehouses.ItemCheck += clbWarehouses_ItemCheck;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(739, 34);
+            label5.Name = "label5";
+            label5.Size = new Size(82, 20);
+            label5.TabIndex = 17;
+            label5.Text = "Warehouse";
+            // 
+            // cmbWarehouse
+            // 
+            cmbWarehouse.FormattingEnabled = true;
+            cmbWarehouse.Location = new Point(875, 31);
+            cmbWarehouse.Name = "cmbWarehouse";
+            cmbWarehouse.Size = new Size(252, 28);
+            cmbWarehouse.TabIndex = 16;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(401, 96);
+            label6.Name = "label6";
+            label6.Size = new Size(65, 20);
+            label6.TabIndex = 19;
+            label6.Text = "Quantity";
+            // 
+            // txtQuantity
+            // 
+            txtQuantity.Location = new Point(472, 93);
+            txtQuantity.Name = "txtQuantity";
+            txtQuantity.Size = new Size(234, 27);
+            txtQuantity.TabIndex = 20;
+            // 
             // ItemsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1028, 450);
+            ClientSize = new Size(1028, 530);
+            Controls.Add(txtQuantity);
+            Controls.Add(label6);
+            Controls.Add(label5);
+            Controls.Add(cmbWarehouse);
+            Controls.Add(clbWarehouses);
+            Controls.Add(label4);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
@@ -174,5 +237,11 @@
         private Button btnUpdate;
         private Button btnDelete;
         private Button btnAdd;
+        private Label label4;
+        private CheckedListBox clbWarehouses;
+        private Label label5;
+        private ComboBox cmbWarehouse;
+        private Label label6;
+        private TextBox txtQuantity;
     }
 }

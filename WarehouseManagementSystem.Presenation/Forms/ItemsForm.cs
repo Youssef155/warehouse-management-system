@@ -13,6 +13,7 @@ using WarehouseManagementSystem.Business.Services;
 using WarehouseManagementSystem.Data;
 using WarehouseManagementSystem.Data.Models;
 using WarehouseManagementSystem.Data.UOW;
+using WarehouseManagementSystem.Data.UOW.Interfaces;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace WarehouseManagementSystem.Presenation.Forms
@@ -20,10 +21,12 @@ namespace WarehouseManagementSystem.Presenation.Forms
     public partial class ItemsForm : Form
     {
         private readonly ItemService _itemService;
+        private readonly UnitOfWork _unitOfWork;
         public ItemsForm()
         {
             InitializeComponent();
             _itemService = new ItemService(new UnitOfWork(new WMSDbContext()));
+            _unitOfWork = new UnitOfWork(new WMSDbContext());
             LoadItems();
             cmbUnit.Items.AddRange(new string[] { "", "Piece", "Kg", "Liter", "Meter" });
             cmbUnit.SelectedIndex = 0;
@@ -36,12 +39,22 @@ namespace WarehouseManagementSystem.Presenation.Forms
             dgvItems.Columns["ItemId"].Visible = false;
             dgvItems.ReadOnly = true;
             dgvItems.AllowUserToDeleteRows = false;
+
+            var warehouses = await _unitOfWork.Warehouses.GetAllAsync();
+            clbWarehouses.DataSource = warehouses;
+            clbWarehouses.DisplayMember = "Name";
+            clbWarehouses.ValueMember = "Id";
+
+            cmbWarehouse.DataSource = warehouses.ToList();
+            cmbWarehouse.DisplayMember = "Name";
+            cmbWarehouse.ValueMember = "Id";
         }
 
         private void ResetFormInput()
         {
             txtName.Text = string.Empty;
             txtCode.Text = string.Empty;
+            txtQuantity.Text = string.Empty;
         }
 
         private async Task FillFrom(int id)
@@ -52,11 +65,54 @@ namespace WarehouseManagementSystem.Presenation.Forms
             cmbUnit.SelectedItem = item.MeasurementUnit;
         }
 
+
         private async void btnAdd_Click(object sender, EventArgs e)
         {
-            await _itemService.AddItemAsync(txtName.Text, txtCode.Text, cmbUnit.SelectedItem.ToString());
-            LoadItems();
-            ResetFormInput();
+            try
+            {
+                // Validate input
+                if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(txtCode.Text))
+                {
+                    MessageBox.Show("Please enter an item name and code.");
+                    return;
+                }
+
+                if (cmbWarehouse.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select a warehouse.");
+                    return;
+                }
+
+                if (!int.TryParse(txtQuantity.Text, out int quantity) || quantity <= 0)
+                {
+                    MessageBox.Show("Please enter a valid quantity.");
+                    return;
+                }
+
+                // Get warehouse selection
+                var selectedWarehouse = (Warehouse)cmbWarehouse.SelectedItem;
+
+                // Call service to add the new item
+                await _itemService.AddNewItemToWarehouseAsync(
+                    txtCode.Text,
+                    txtName.Text,
+                    selectedWarehouse.Id,
+                    quantity,
+                    cmbUnit.SelectedItem.ToString()
+                );
+
+                MessageBox.Show("New item added successfully!");
+
+                // Refresh DataGridView to show the updated warehouse stock
+                dgvItems.DataSource = await _itemService.GetItemsByWarehousesAsync(new List<int> { selectedWarehouse.Id });
+
+                // Clear input fields
+                ResetFormInput();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
         }
 
         private async void btnUpdate_Click(object sender, EventArgs e)
@@ -84,5 +140,43 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 FillFrom(id);
             }
         }
+
+        private async void clbWarehouses_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            await Task.Delay(100); // Ensure UI updates before fetching data
+
+            // Manually update the selected warehouse list
+            var selectedWarehouseIds = clbWarehouses.CheckedItems
+                                                    .Cast<Warehouse>()
+                                                    .Select(w => w.Id)
+                                                    .ToList();
+
+            // Handle the case where an item is being checked or unchecked
+            if (e.NewValue == CheckState.Checked)
+            {
+                var warehouse = (Warehouse)clbWarehouses.Items[e.Index];
+                selectedWarehouseIds.Add(warehouse.Id);
+            }
+            else
+            {
+                var warehouse = (Warehouse)clbWarehouses.Items[e.Index];
+                selectedWarehouseIds.Remove(warehouse.Id);
+            }
+
+            if (!selectedWarehouseIds.Any()) return; // No warehouses selected, exit early
+
+            // Fetch items from the selected warehouses
+            var items = await _itemService.GetItemsByWarehousesAsync(selectedWarehouseIds);
+
+            // Clear DataGridView
+            dgvItems.DataSource = null;
+            dgvItems.Rows.Clear();
+            dgvItems.Columns.Clear();
+            dgvItems.Refresh();
+
+            // Bind the new data
+            dgvItems.DataSource = items;
+        }
+
     }
 }
