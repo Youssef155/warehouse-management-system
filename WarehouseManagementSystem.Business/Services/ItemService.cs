@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WarehouseManagementSystem.Business.Interfaces;
+using WarehouseManagementSystem.Core.DTOs;
 using WarehouseManagementSystem.Data.Models;
 using WarehouseManagementSystem.Data.UOW.Interfaces;
 
@@ -21,6 +22,24 @@ public class ItemService : IItemService
     {
         return await _unitOfWork.Items.GetAllAsync();
     }
+
+    public async Task<List<ItemWarehouseDto>> GetItemsInWarehousesAsync()
+    {
+        var stockItems = await _unitOfWork.StockItemRepository
+            .GetAllWithIncludesAsync(s => s.Item, s => s.Warehouse);
+
+        var result = stockItems.Select(s => new ItemWarehouseDto
+        {
+            ItemName = s.Item.Name,
+            WarehouseName = s.Warehouse.Name,
+            Quantity = s.Quantity,
+            ItemCode = s.Item.Code,
+            ItemUnit = s.Item.MeasurementUnit
+        }).ToList();
+
+        return result;
+    }
+
 
     public async Task<Item> GetItemByIdAsync(int id) => 
         await _unitOfWork.Items.GetByIdAsync(id);

@@ -31,7 +31,8 @@ namespace WarehouseManagementSystem.Presenation.Forms
 
         private async Task LoadItems()
         {
-            dgvItems.DataSource = await _itemService.GetAllItemsAsync();
+            var itemsInWarehouses = await _itemService.GetItemsInWarehousesAsync();
+            dgvItems.DataSource = itemsInWarehouses;
         }
 
         private void ResetFormInput()
