@@ -7,11 +7,11 @@ namespace WarehouseManagementSystem.Data.Repositories.Interfaces;
 
 public interface IRepository<T> where T : class
 {
-    T GetById(int id);
-    IEnumerable<T> GetAll();
-    IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
-    void Add(T entity);
-    void Update(T entity);
-    void Delete(T entity);
-    void Save();
+    Task<T> GetByIdAsync(int id);
+    Task<IEnumerable<T>> GetAllAsync();
+    Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+    Task AddAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(T entity);
+    Task SaveAsync();
 }

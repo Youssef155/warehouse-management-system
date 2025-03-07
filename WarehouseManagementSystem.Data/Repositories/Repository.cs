@@ -20,30 +20,33 @@ public class Repository<T> : IRepository<T> where T : class
         _dbSet = _context.Set<T>();
     }
 
-    public T GetById(int id) => _dbSet.Find(id);
+    public async Task<T> GetByIdAsync(int id) =>
+        await _dbSet.FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == id);
 
-    public IEnumerable<T> GetAll() => _dbSet.ToList();
+    public async Task<IEnumerable<T>> GetAllAsync() =>
+        await _dbSet.ToListAsync();
 
-    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => _dbSet.Where(predicate).ToList();
+    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate) =>
+        await _dbSet.Where(predicate).ToListAsync();
 
-    public void Add(T entity)
+    public async Task AddAsync(T entity)
     {
-        _dbSet.Add(entity);
-        Save();
+        await _dbSet.AddAsync(entity);
+        await SaveAsync();
     }
 
-    public void Update(T entity)
+    public async Task UpdateAsync(T entity)
     {
         _dbSet.Update(entity);
-        Save();
+        await SaveAsync();
     }
 
-    public void Delete(T entity)
+    public async Task DeleteAsync(T entity)
     {
         _dbSet.Remove(entity);
-        Save();
+        await SaveAsync();
     }
 
-    public void Save() => _context.SaveChanges();
+    public async Task SaveAsync() => await _context.SaveChangesAsync();
 }
 
