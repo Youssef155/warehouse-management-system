@@ -112,5 +112,6 @@ public partial class MainForm : Form
     private void btnStockTransfer_Click(object sender, EventArgs e)
     {
         ActivateBtn(sender);
+        OpenChildForm(new StockTransferForm());
     }
 }

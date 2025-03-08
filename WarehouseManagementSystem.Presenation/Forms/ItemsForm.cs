@@ -27,9 +27,6 @@ namespace WarehouseManagementSystem.Presenation.Forms
             InitializeComponent();
             _itemService = new ItemService(new UnitOfWork(new WMSDbContext()));
             _unitOfWork = new UnitOfWork(new WMSDbContext());
-            LoadItems();
-            cmbUnit.Items.AddRange(new string[] { "", "Piece", "Kg", "Liter", "Meter" });
-            cmbUnit.SelectedIndex = 0;
         }
 
         private async Task LoadItems()
@@ -127,17 +124,17 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 item.MeasurementUnit = cmbUnit.SelectedItem.ToString();
 
                 await _itemService.UpdateItemAsync(id, item.Code, item.Name, item.MeasurementUnit);
-                LoadItems();
+                await LoadItems();
                 ResetFormInput();
             }
         }
 
-        private void dgvItems_Click(object sender, EventArgs e)
+        private async void dgvItems_Click(object sender, EventArgs e)
         {
             if (dgvItems.SelectedRows.Count > 0) // Ensure a row is selected
             {
                 int id = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["ItemId"].Value);
-                FillFrom(id);
+                await FillFrom(id);
             }
         }
 
@@ -178,5 +175,11 @@ namespace WarehouseManagementSystem.Presenation.Forms
             dgvItems.DataSource = items;
         }
 
+        private async void ItemsForm_Load(object sender, EventArgs e)
+        {
+            await LoadItems();
+            cmbUnit.Items.AddRange(new string[] { "", "Piece", "Kg", "Liter", "Meter" });
+            cmbUnit.SelectedIndex = 0;
+        }
     }
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using WarehouseManagementSystem.Business.Interfaces;
+using WarehouseManagementSystem.Core.DTOs;
 using WarehouseManagementSystem.Data.Models;
 using WarehouseManagementSystem.Data.UOW.Interfaces;
 
@@ -23,21 +25,108 @@ public class StockTransferService : IStockTransferService
     public async Task<StockTransfer> GetStockTransferByIdAsync(int id) => 
         await _unitOfWork.StockTransfers.GetByIdAsync(id);
 
-    public async Task TransferStockAsync(int fromWarehouseId, int toWarehouseId, int itemId, int quantity, DateTime transferDate)
+    public async Task<bool> TransferStockAsync(StockTransferDto transferDto)
     {
-        if (fromWarehouseId == toWarehouseId)
-            throw new ArgumentException("Cannot transfer stock to the same warehouse.");
+        if (transferDto.SourceWarehouseId == transferDto.DestinationWarehouseId)
+            throw new InvalidOperationException("Source and destination warehouses cannot be the same.");
 
-        var transfer = new StockTransfer
+        var sourceStockItems = await _unitOfWork.StockItemRepository
+            .FindAsync(s => s.WarehouseId == transferDto.SourceWarehouseId &&
+                            transferDto.Items.Select(i => i.ItemId).Contains(s.ItemId));
+
+        foreach (var transferItem in transferDto.Items)
         {
-            FromWarehouseId = fromWarehouseId,
-            ToWarehouseId = toWarehouseId,
-            ItemId = itemId,
-            Quantity = quantity,
-            TransferDate = transferDate
-        };
+            var stockItem = sourceStockItems.FirstOrDefault(s => s.ItemId == transferItem.ItemId);
 
-        await _unitOfWork.StockTransfers.AddAsync(transfer);
+            if (stockItem == null || stockItem.Quantity < transferItem.Quantity)
+                throw new InvalidOperationException($"Insufficient stock for item ID: {transferItem.ItemId}");
+
+            if (stockItem.ExpirationDate <= DateTime.Now)
+                throw new InvalidOperationException($"Cannot transfer expired item ID: {transferItem.ItemId}");
+
+            // Deduct from source warehouse
+            stockItem.Quantity -= transferItem.Quantity;
+            await _unitOfWork.StockItemRepository.UpdateAsync(stockItem);
+
+            // Check if item exists in destination warehouse
+            var destinationStockItem = await _unitOfWork.StockItemRepository
+                .FindAsync(s => s.ItemId == transferItem.ItemId &&
+                                s.WarehouseId == transferDto.DestinationWarehouseId);
+
+            if (destinationStockItem.Any())
+            {
+                var existingStock = destinationStockItem.First();
+                existingStock.Quantity += transferItem.Quantity;
+                await _unitOfWork.StockItemRepository.UpdateAsync(existingStock);
+            }
+            else
+            {
+                var newStockItem = new StockItem
+                {
+                    ItemId = transferItem.ItemId,
+                    WarehouseId = transferDto.DestinationWarehouseId,
+                    Quantity = transferItem.Quantity,
+                    ProductionDate = stockItem.ProductionDate,
+                    ExpirationDate = stockItem.ExpirationDate,
+                };
+                await _unitOfWork.StockItemRepository.AddAsync(newStockItem);
+            }
+        }
+
         await _unitOfWork.SaveAsync();
+        return true;
     }
+
+    public async Task<bool> TransferStockAsync(List<StockTransferDto> transfers)
+    {
+        foreach (var transfer in transfers)
+        {
+            var stockItem = await _unitOfWork.StockItemRepository
+                .GetQueryable() // Ensure it's IQueryable to allow EF methods
+                .Where(s => s.ItemId == transfer.ItemId
+                    && s.WarehouseId == transfer.SourceWarehouseId
+                    && s.ProductionDate == transfer.ProductionDate
+                    && s.ExpirationDate == transfer.ExpirationDate)
+                .FirstOrDefaultAsync(); // Fetch a single item
+
+            if (stockItem == null || stockItem.Quantity < transfer.TransferQuantity)
+            return false; // Should never happen due to UI validation, but safety check
+
+            stockItem.Quantity -= transfer.TransferQuantity;
+            await _unitOfWork.StockItemRepository.UpdateAsync(stockItem);
+
+                // Check if item already exists in destination warehouse
+            var destinationStock = await _unitOfWork.StockItemRepository
+                .GetQueryable()
+                .Where(s => s.ItemId == transfer.ItemId
+                    && s.WarehouseId == transfer.DestinationWarehouseId
+                    && s.ProductionDate == transfer.ProductionDate
+                    && s.ExpirationDate == transfer.ExpirationDate)
+                .FirstOrDefaultAsync(); // Fetch a single item
+
+            if (destinationStock == null)
+            {
+                // Create new entry
+                var newStock = new StockItem
+                {
+                    ItemId = transfer.ItemId,
+                    WarehouseId = transfer.DestinationWarehouseId,
+                    Quantity = transfer.TransferQuantity,
+                    ProductionDate = transfer.ProductionDate,
+                    ExpirationDate = transfer.ExpirationDate
+                };
+                await _unitOfWork.StockItemRepository.AddAsync(newStock);
+            }
+            else
+            {
+                // Update existing quantity
+                destinationStock.Quantity += transfer.TransferQuantity;
+                await _unitOfWork.StockItemRepository.UpdateAsync(destinationStock);
+            }
+        }
+
+        await _unitOfWork.SaveAsync();
+        return true;
+    }
+
 }
