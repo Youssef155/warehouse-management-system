@@ -220,6 +220,7 @@
             Controls.Add(dgvItems);
             Name = "ItemsForm";
             Text = "ItemsForm";
+            Load += ItemsForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvItems).EndInit();
             ResumeLayout(false);
             PerformLayout();

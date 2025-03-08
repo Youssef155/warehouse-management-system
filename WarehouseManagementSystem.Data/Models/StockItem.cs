@@ -15,4 +15,6 @@ public class StockItem : BaseEntity
     public Item Item { get; set; }
 
     public int Quantity { get; set; }
+    public DateTime ProductionDate { get; set; }
+    public DateTime ExpirationDate { get; set; }
 }

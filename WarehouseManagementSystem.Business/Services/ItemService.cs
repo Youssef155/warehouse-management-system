@@ -36,6 +36,8 @@ public class ItemService : IItemService
             WarehouseName = s.Warehouse.Name,
             Quantity = s.Quantity,
             ItemCode = s.Item.Code,
+            ProductionDate = s.ProductionDate,
+            ExpirationDate = s.ExpirationDate,
             Units = s.Item.ItemUnits.Select(iu => new ItemUnitDto
             {
                 UnitId = iu.Unit.Id,
@@ -64,6 +66,8 @@ public class ItemService : IItemService
             WarehouseName = s.Warehouse.Name,
             Quantity = s.Quantity,
             ItemCode = s.Item.Code,
+            ProductionDate = s.ProductionDate,
+            ExpirationDate = s.ExpirationDate,
             Units = s.Item.ItemUnits.Select(iu => new ItemUnitDto
             {
                 UnitId = iu.Unit.Id,
@@ -74,6 +78,36 @@ public class ItemService : IItemService
 
         return result;
     }
+
+    public async Task<List<ItemWarehouseDto>> GetItemsByWarehouseIdAsync(int warehouseId)
+    {
+        var query = _unitOfWork.StockItemRepository
+        .GetQueryable()
+        .Where(s => s.WarehouseId == warehouseId)
+        .Include(s => s.Item)
+        .Include(s => s.Warehouse);
+
+        var stockItems = await query.ToListAsync();
+
+        var result = stockItems.Select(s => new ItemWarehouseDto
+        {
+            ItemId = s.Item.Id,
+            ItemName = s.Item.Name,
+            WarehouseName = s.Warehouse.Name,
+            Quantity = s.Quantity,
+            ItemCode = s.Item.Code,
+            ProductionDate = s.ProductionDate,
+            ExpirationDate = s.ExpirationDate,
+            Units = s.Item.ItemUnits.Select(iu => new ItemUnitDto
+            {
+                UnitId = iu.Unit.Id,
+                UnitName = iu.Unit.Name,
+                ConversionFactor = iu.ConversionFactor
+            }).ToList()
+        }).ToList();
+        return result;
+    }
+
 
     public async Task<Item> GetItemByIdAsync(int id) => 
         await _unitOfWork.Items.GetByIdAsync(id);
