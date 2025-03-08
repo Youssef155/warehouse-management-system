@@ -94,6 +94,8 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 Width = 80
             };
             dgvStockItems.Columns.Add(transferQtyColumn);
+
+            dgvStockItems.Columns["TransferQuantity"].ReadOnly = false;
         }
 
         private async void LoadStockItems(int warehouseId)
