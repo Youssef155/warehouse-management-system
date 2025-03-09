@@ -102,6 +102,7 @@ public partial class MainForm : Form
     private void btnSupplyOrder_Click(object sender, EventArgs e)
     {
         ActivateBtn(sender);
+        OpenChildForm(new SupplyOrderForm());
     }
 
     private void btnWithdrawalOrder_Click(Object sender, EventArgs e)
