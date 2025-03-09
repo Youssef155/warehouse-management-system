@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarehouseManagementSystem.Core.DTOs;
+using WarehouseManagementSystem.Data.Models;
+using WarehouseManagementSystem.Data.Repositories.Interfaces;
 
 namespace WarehouseManagementSystem.Data.Repositories
 {
-    public class WarehouseRepository
+    public class WarehouseRepository : Repository<Warehouse>, IWarehouseRepository
     {
         private readonly WMSDbContext _context;
 
-        public WarehouseRepository(WMSDbContext context)
+        public WarehouseRepository(WMSDbContext context) : base(context) 
         {
             _context = context;
         }
