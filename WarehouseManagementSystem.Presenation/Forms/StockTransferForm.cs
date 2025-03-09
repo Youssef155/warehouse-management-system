@@ -34,7 +34,6 @@ namespace WarehouseManagementSystem.Presenation.Forms
         {
             dgvStockItems.Columns.Clear();
             dgvStockItems.AutoGenerateColumns = false;
-            dgvStockItems.ReadOnly = true;
             dgvStockItems.AllowUserToDeleteRows = false;
 
             // Checkbox column for selection
@@ -45,6 +44,17 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 Width = 40
             };
             dgvStockItems.Columns.Add(chkColumn);
+
+            // Item Id column
+            dgvStockItems.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "ItemId",
+                HeaderText = "Item Id",
+                DataPropertyName = "ItemId",
+                ReadOnly = true,
+                Width = 150,
+                Visible = false
+            });
 
             // Item Name column
             dgvStockItems.Columns.Add(new DataGridViewTextBoxColumn
@@ -63,7 +73,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 HeaderText = "Available Qty",
                 DataPropertyName = "Quantity",
                 ReadOnly = true,
-                Width = 80
+                Width = 120
             });
 
             // Production Date column
@@ -73,7 +83,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 HeaderText = "Production Date",
                 DataPropertyName = "ProductionDate",
                 ReadOnly = true,
-                Width = 100
+                Width = 200
             });
 
             // Expiration Date column
@@ -83,7 +93,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 HeaderText = "Expiration Date",
                 DataPropertyName = "ExpirationDate",
                 ReadOnly = true,
-                Width = 100
+                Width = 200
             });
 
             // Transfer Quantity column (Editable)
@@ -91,11 +101,9 @@ namespace WarehouseManagementSystem.Presenation.Forms
             {
                 Name = "TransferQuantity",
                 HeaderText = "Transfer Qty",
-                Width = 80
+                Width = 120
             };
             dgvStockItems.Columns.Add(transferQtyColumn);
-
-            dgvStockItems.Columns["TransferQuantity"].ReadOnly = false;
         }
 
         private async void LoadStockItems(int warehouseId)
@@ -107,6 +115,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
             foreach (var stock in stockItems)
             {
                 dgvStockItems.Rows.Add(false,
+                                       stock.ItemId,
                                        stock.ItemName,
                                        stock.Quantity,
                                        stock.ProductionDate.ToShortDateString(),  // Get from StockItem
@@ -167,11 +176,12 @@ namespace WarehouseManagementSystem.Presenation.Forms
                 return;
             }
 
-            var selectedItems = new List<StockTransferDto>();
+            //var selectedItems = new List<StockTransferDto>();
+            StockTransferDto transferDto = new StockTransferDto();
 
             foreach (DataGridViewRow row in dgvStockItems.Rows)
             {
-                if (Convert.ToBoolean(row.Cells["chkSelect"].Value)) // Checkbox is checked
+                if (Convert.ToBoolean(row.Cells["Select"].Value)) // Checkbox is checked
                 {
                     int itemId = (int)row.Cells["ItemId"].Value;
                     int availableQuantity = (int)row.Cells["AvailableQuantity"].Value;
@@ -196,27 +206,39 @@ namespace WarehouseManagementSystem.Presenation.Forms
                         return;
                     }
 
-                    selectedItems.Add(new StockTransferDto
+                    transferDto.Items.Add(new StockTransferItemDto
                     {
                         ItemId = itemId,
-                        SourceWarehouseId = sourceWarehouseId,
-                        DestinationWarehouseId = destinationWarehouseId,
-                        TransferQuantity = transferQuantity,
-                        ProductionDate = DateTime.Parse(row.Cells["ProductionDate"].Value.ToString()),
-                        ExpirationDate = expirationDate,
-                        TransferDate = DateTime.UtcNow
+                        Quantity = transferQuantity,
                     });
+
+                    transferDto.DestinationWarehouseId = destinationWarehouseId;
+                    transferDto.SourceWarehouseId = sourceWarehouseId;
+                    transferDto.ProductionDate = DateTime.Parse(row.Cells["ProductionDate"].Value.ToString());
+                    transferDto.ExpirationDate = expirationDate;
+                    transferDto.TransferDate = DateTime.UtcNow;
+
+                    //selectedItems.Add(new StockTransferDto
+                    //{
+                    //    ItemId = itemId,
+                    //    SourceWarehouseId = sourceWarehouseId,
+                    //    DestinationWarehouseId = destinationWarehouseId,
+                    //    TransferQuantity = transferQuantity,
+                    //    ProductionDate = DateTime.Parse(row.Cells["ProductionDate"].Value.ToString()),
+                    //    ExpirationDate = expirationDate,
+                    //    TransferDate = DateTime.UtcNow
+                    //});
                 }
             }
 
-            if (selectedItems.Count == 0)
+            if (transferDto.Items.Count == 0)
             {
                 MessageBox.Show("Please select at least one item to transfer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Call Business Logic to Handle the Transfer
-            bool success = await _stockTransferService.TransferStockAsync(selectedItems);
+            bool success = await _stockTransferService.TransferStockAsync(transferDto);
 
             if (success)
             {
