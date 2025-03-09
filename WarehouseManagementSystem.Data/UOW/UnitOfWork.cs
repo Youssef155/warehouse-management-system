@@ -2,6 +2,7 @@
 using WarehouseManagementSystem.Data.Repositories.Interfaces;
 using WarehouseManagementSystem.Data.Repositories;
 using WarehouseManagementSystem.Data.UOW.Interfaces;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace WarehouseManagementSystem.Data.UOW;
 
@@ -10,6 +11,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly WMSDbContext _context;
     public IWarehouseRepository Warehouses { get; }
     public IRepository<Item> Items { get; }
+    public IStockItemRepository StockItems { get; }
     public ISupplierRepository Suppliers { get; }
     public IRepository<Customer> Customers { get; }
     public ISupplyOrderRepository SupplyOrders {  get; }
@@ -28,7 +30,14 @@ public class UnitOfWork : IUnitOfWork
         WithdrawalOrders = new Repository<WithdrawalOrder>(_context);
         StockTransfers = new Repository<StockTransfer>(_context);
         StockItemRepository = new StockItemRepository(_context);
+        StockItems = new StockItemRepository(context);
     }
+
+    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    {
+        return await _context.Database.BeginTransactionAsync();
+    }
+
 
     public async Task SaveAsync() => await _context.SaveChangesAsync();
 

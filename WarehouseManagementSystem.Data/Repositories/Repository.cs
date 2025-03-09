@@ -8,11 +8,11 @@ using WarehouseManagementSystem.Data.Repositories.Interfaces;
 
 namespace WarehouseManagementSystem.Data.Repositories;
 
-public class Repository<T> : IRepository<T> where T : class
+public class Repository<T> : IRepository<T>, IDisposable where T : class
 {
     private readonly WMSDbContext _context;
     protected readonly DbSet<T> _dbSet;
-    //private bool _disposed = false;
+    private bool _disposed = false;
 
     public Repository(WMSDbContext context)
     {
@@ -60,21 +60,21 @@ public class Repository<T> : IRepository<T> where T : class
     public async Task SaveAsync() => await _context.SaveChangesAsync();
 
     // ✅ Properly Dispose of DbContext
-    //protected virtual void Dispose(bool disposing)
-    //{
-    //    if (!_disposed)
-    //    {
-    //        if (disposing)
-    //        {
-    //            _context.Dispose(); // Dispose of context when repository is disposed
-    //        }
-    //        _disposed = true;
-    //    }
-    //}
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _context.Dispose(); // Dispose of context when repository is disposed
+            }
+            _disposed = true;
+        }
+    }
 
-    //public void Dispose()
-    //{
-    //    Dispose(true);
-    //    GC.SuppressFinalize(this); // Prevents the finalizer from running
-    //}
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this); // Prevents the finalizer from running
+    }
 }
