@@ -21,12 +21,14 @@ namespace WarehouseManagementSystem.Presenation.Forms
     public partial class ItemsForm : Form
     {
         private readonly ItemService _itemService;
+        private readonly WarehouseService _warehouseService;
         private readonly UnitOfWork _unitOfWork;
         public ItemsForm()
         {
             InitializeComponent();
-            _itemService = new ItemService(new UnitOfWork(new WMSDbContext()));
             _unitOfWork = new UnitOfWork(new WMSDbContext());
+            _itemService = new ItemService(_unitOfWork);
+            _warehouseService = new WarehouseService(_unitOfWork);
         }
 
         private async Task LoadItems()
@@ -37,7 +39,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
             dgvItems.ReadOnly = true;
             dgvItems.AllowUserToDeleteRows = false;
 
-            var warehouses = await _unitOfWork.Warehouses.GetAllAsync();
+            var warehouses = await _warehouseService.GetAllWarehousesAsync();
             clbWarehouses.DataSource = warehouses;
             clbWarehouses.DisplayMember = "Name";
             clbWarehouses.ValueMember = "Id";

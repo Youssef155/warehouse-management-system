@@ -20,6 +20,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
     {
         private readonly StockTransferService _stockTransferService;
         private readonly ItemService _itemService;
+        private readonly WarehouseService _warehouseService;
         private readonly UnitOfWork _unitOfWork;
 
         public StockTransferForm()
@@ -28,6 +29,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
             _unitOfWork = new UnitOfWork(new WMSDbContext());
             _stockTransferService = new StockTransferService(_unitOfWork);
             _itemService = new ItemService(_unitOfWork);
+            _warehouseService = new WarehouseService(_unitOfWork);
         }
 
         private void InitializeDataGridView()
@@ -119,7 +121,7 @@ namespace WarehouseManagementSystem.Presenation.Forms
         {
             try
             {
-                var warehouses = await _unitOfWork.Warehouses.GetAllAsync();
+                var warehouses = await _warehouseService.GetAllWarehousesAsync();
                 if (warehouses == null || !warehouses.Any())
                 {
                     MessageBox.Show("No warehouses found.");
