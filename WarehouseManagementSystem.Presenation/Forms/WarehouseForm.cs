@@ -21,8 +21,8 @@ public partial class WarehouseForm : Form
     public WarehouseForm()
     {
         InitializeComponent();
-        _warehouseService = new WarehouseService(new UnitOfWork(new WMSDbContext()));
         _unitOfWork = new UnitOfWork(new WMSDbContext());
+        _warehouseService = new WarehouseService(_unitOfWork);
         LoadWarehouses();
     }
 
