@@ -5,13 +5,13 @@ namespace WarehouseManagementSystem.Data.UOW.Interfaces;
 
 public interface IUnitOfWork : IDisposable
 {
-    IRepository<Warehouse> Warehouses { get; }
-    IRepository<Item> Items { get; }
-    IRepository<Supplier> Suppliers { get; }
-    IRepository<Customer> Customers { get; }
-    IRepository<SupplyOrder> SupplyOrders { get; }
-    IRepository<WithdrawalOrder> WithdrawalOrders { get; }
-    IRepository<StockTransfer> StockTransfers { get; }
-    IStockItemRepository StockItemRepository { get; }
+    public IWarehouseRepository Warehouses { get; }
+    public IRepository<Item> Items { get; }
+    public ISupplierRepository Suppliers { get; }
+    public IRepository<Customer> Customers { get; }
+    public ISupplyOrderRepository SupplyOrders { get; }
+    public IRepository<WithdrawalOrder> WithdrawalOrders { get; }
+    public IRepository<StockTransfer> StockTransfers { get; }
+    public IStockItemRepository StockItemRepository { get; }
     Task SaveAsync();
 }
