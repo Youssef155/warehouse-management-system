@@ -47,10 +47,10 @@
             dgvWarehouses.BackgroundColor = SystemColors.Window;
             dgvWarehouses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvWarehouses.GridColor = Color.Gray;
-            dgvWarehouses.Location = new Point(0, 184);
+            dgvWarehouses.Location = new Point(10, 184);
             dgvWarehouses.Name = "dgvWarehouses";
             dgvWarehouses.RowHeadersWidth = 51;
-            dgvWarehouses.Size = new Size(864, 294);
+            dgvWarehouses.Size = new Size(842, 238);
             dgvWarehouses.TabIndex = 0;
             dgvWarehouses.Click += dgvWarehouses_Click;
             // 

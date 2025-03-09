@@ -55,7 +55,7 @@
             dgvItems.Location = new Point(12, 367);
             dgvItems.Name = "dgvItems";
             dgvItems.RowHeadersWidth = 51;
-            dgvItems.Size = new Size(1004, 132);
+            dgvItems.Size = new Size(1004, 91);
             dgvItems.TabIndex = 0;
             dgvItems.Click += dgvItems_Click;
             // 
