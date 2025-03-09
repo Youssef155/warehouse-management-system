@@ -29,11 +29,9 @@
         private void InitializeComponent()
         {
             dgvSupplyOrder = new DataGridView();
-            txtOrderNumber = new TextBox();
             cmbWarehouses = new ComboBox();
             cmbSuppliers = new ComboBox();
             label1 = new Label();
-            label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
@@ -48,6 +46,8 @@
             label9 = new Label();
             txtItemQty = new TextBox();
             btnAddOrder = new Button();
+            label10 = new Label();
+            cmbMeasurementUnit = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dgvSupplyOrder).BeginInit();
             SuspendLayout();
             // 
@@ -59,15 +59,8 @@
             dgvSupplyOrder.Location = new Point(38, 290);
             dgvSupplyOrder.Name = "dgvSupplyOrder";
             dgvSupplyOrder.RowHeadersWidth = 51;
-            dgvSupplyOrder.Size = new Size(1251, 231);
+            dgvSupplyOrder.Size = new Size(1294, 231);
             dgvSupplyOrder.TabIndex = 0;
-            // 
-            // txtOrderNumber
-            // 
-            txtOrderNumber.Location = new Point(152, 71);
-            txtOrderNumber.Name = "txtOrderNumber";
-            txtOrderNumber.Size = new Size(250, 27);
-            txtOrderNumber.TabIndex = 6;
             // 
             // cmbWarehouses
             // 
@@ -80,7 +73,7 @@
             // cmbSuppliers
             // 
             cmbSuppliers.FormattingEnabled = true;
-            cmbSuppliers.Location = new Point(611, 30);
+            cmbSuppliers.Location = new Point(152, 74);
             cmbSuppliers.Name = "cmbSuppliers";
             cmbSuppliers.Size = new Size(250, 28);
             cmbSuppliers.TabIndex = 8;
@@ -94,15 +87,6 @@
             label1.TabIndex = 9;
             label1.Text = "Warehouse";
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(38, 77);
-            label2.Name = "label2";
-            label2.Size = new Size(105, 20);
-            label2.TabIndex = 10;
-            label2.Text = "Order Number";
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -115,7 +99,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(494, 36);
+            label4.Location = new Point(35, 80);
             label4.Name = "label4";
             label4.Size = new Size(64, 20);
             label4.TabIndex = 12;
@@ -163,7 +147,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(925, 81);
+            label7.Location = new Point(925, 34);
             label7.Name = "label7";
             label7.Size = new Size(78, 20);
             label7.TabIndex = 19;
@@ -171,7 +155,7 @@
             // 
             // txtItemCode
             // 
-            txtItemCode.Location = new Point(1039, 74);
+            txtItemCode.Location = new Point(1082, 25);
             txtItemCode.Name = "txtItemCode";
             txtItemCode.Size = new Size(250, 27);
             txtItemCode.TabIndex = 18;
@@ -179,7 +163,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(925, 33);
+            label8.Location = new Point(505, 33);
             label8.Name = "label8";
             label8.Size = new Size(83, 20);
             label8.TabIndex = 21;
@@ -187,7 +171,7 @@
             // 
             // txtItemName
             // 
-            txtItemName.Location = new Point(1039, 27);
+            txtItemName.Location = new Point(611, 25);
             txtItemName.Name = "txtItemName";
             txtItemName.Size = new Size(250, 27);
             txtItemName.TabIndex = 20;
@@ -195,7 +179,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(925, 132);
+            label9.Location = new Point(925, 85);
             label9.Name = "label9";
             label9.Size = new Size(99, 20);
             label9.TabIndex = 23;
@@ -203,7 +187,7 @@
             // 
             // txtItemQty
             // 
-            txtItemQty.Location = new Point(1039, 125);
+            txtItemQty.Location = new Point(1082, 76);
             txtItemQty.Name = "txtItemQty";
             txtItemQty.Size = new Size(250, 27);
             txtItemQty.TabIndex = 22;
@@ -216,12 +200,32 @@
             btnAddOrder.TabIndex = 24;
             btnAddOrder.Text = "Save Order";
             btnAddOrder.UseVisualStyleBackColor = true;
+            btnAddOrder.Click += btnAddOrder_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(925, 128);
+            label10.Name = "label10";
+            label10.Size = new Size(130, 20);
+            label10.TabIndex = 26;
+            label10.Text = "Measurement Unit";
+            // 
+            // cmbMeasurementUnit
+            // 
+            cmbMeasurementUnit.FormattingEnabled = true;
+            cmbMeasurementUnit.Location = new Point(1082, 120);
+            cmbMeasurementUnit.Name = "cmbMeasurementUnit";
+            cmbMeasurementUnit.Size = new Size(250, 28);
+            cmbMeasurementUnit.TabIndex = 25;
             // 
             // SupplyOrderForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1375, 569);
+            Controls.Add(label10);
+            Controls.Add(cmbMeasurementUnit);
             Controls.Add(btnAddOrder);
             Controls.Add(label9);
             Controls.Add(txtItemQty);
@@ -236,11 +240,9 @@
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(cmbSuppliers);
             Controls.Add(cmbWarehouses);
-            Controls.Add(txtOrderNumber);
             Controls.Add(dgvSupplyOrder);
             Name = "SupplyOrderForm";
             Text = "SupplyOrderForm";
@@ -261,7 +263,6 @@
         private ComboBox comboBox1;
         private ComboBox cmbSuppliers;
         private Label label1;
-        private Label label2;
         private Label label3;
         private Label label4;
         private Label label5;
@@ -273,9 +274,10 @@
         private TextBox txtItemCode;
         private Label label8;
         private TextBox txtItemName;
-        private TextBox txtOrderNumber;
         private Label label9;
         private TextBox txtItemQty;
         private Button btnAddOrder;
+        private Label label10;
+        private ComboBox cmbMeasurementUnit;
     }
 }
