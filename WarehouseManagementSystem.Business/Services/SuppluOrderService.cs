@@ -40,4 +40,38 @@ public class SupplyOrderService : ISupplyOrderService
         await _unitOfWork.SupplyOrders.AddAsync(supplyOrder);
         await _unitOfWork.SaveAsync();
     }
+
+    public async Task AddOrderAsync(SupplyOrder order)
+    {
+        if (order == null) throw new ArgumentNullException(nameof(order));
+
+        // Add the new Supply Order
+        await _unitOfWork.SupplyOrders.AddAsync(order);
+        await _unitOfWork.SaveAsync();
+
+        // Loop through SupplyOrderDetails to add/update items
+        foreach (var detail in order.SupplyOrderDetails)
+        {
+            var newItem = new Item
+            {
+                Name = detail.Item.Name,
+                Code = detail.Item.Code
+            };
+
+            var newStockItem = new StockItem
+            {
+                ItemId = newItem.Id,
+                WarehouseId = order.WarehouseId,
+                Quantity = detail.Quantity,
+                ProductionDate = detail.ProductionDate,
+                ExpirationDate = detail.ExpirationDate
+            };
+
+            await _unitOfWork.Items.AddAsync(newItem);
+        }
+
+        // Save all changes
+        await _unitOfWork.SaveAsync();
+    }
+
 }
