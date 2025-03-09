@@ -35,7 +35,7 @@ public static class ModelBuilderExtensions
         );
 
         modelBuilder.Entity<SupplyOrderDetail>().HasData(
-            new SupplyOrderDetail { SupplyOrderId = 1, ItemId = 1, Quantity = 10, ProductionDate = new DateTime(2024, 2, 6), ShelfLifeDays = 365 }
+            new SupplyOrderDetail { SupplyOrderId = 1, ItemId = 1, Quantity = 10, ProductionDate = new DateTime(2024, 2, 6), ExpirationDate = new DateTime(2026, 2, 6) }
         );
 
         modelBuilder.Entity<WithdrawalOrder>().HasData(
