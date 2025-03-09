@@ -244,6 +244,7 @@
             Controls.Add(dgvSupplyOrder);
             Name = "SupplyOrderForm";
             Text = "SupplyOrderForm";
+            Load += SupplyOrderForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvSupplyOrder).EndInit();
             ResumeLayout(false);
             PerformLayout();

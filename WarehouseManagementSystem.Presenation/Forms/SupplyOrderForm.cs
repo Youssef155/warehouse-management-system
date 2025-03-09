@@ -18,16 +18,14 @@ public partial class SupplyOrderForm : Form
         _unitOfWork = new UnitOfWork(new WMSDbContext());
         _supplyOrderService = new SupplyOrderService(_unitOfWork);
         _warehouseService = new WarehouseService(_unitOfWork);
-
-        SetupDataGridView();
-        LoadData();
     }
     private async Task LoadData()
     {
-        var orders = await _supplyOrderService.GetAllSupplyOrdersWithDetailsAsync();
+        var orders = await _supplyOrderService.GetAllSupplyOrdersDetailsAsync();
         dgvSupplyOrder.DataSource = orders;
-        
+
         var warehouses = await _warehouseService.GetAllWarehousesAsync();
+        cmbWarehouses.DataSource = null;
         cmbWarehouses.DataSource = warehouses;
         cmbWarehouses.DisplayMember = "Name";
         cmbWarehouses.ValueMember = "Id";
@@ -54,4 +52,9 @@ public partial class SupplyOrderForm : Form
         dgvSupplyOrder.ReadOnly = true;
     }
 
+    private async void SupplyOrderForm_Load(object sender, EventArgs e)
+    {
+        await LoadData();
+        SetupDataGridView();
+    }
 }

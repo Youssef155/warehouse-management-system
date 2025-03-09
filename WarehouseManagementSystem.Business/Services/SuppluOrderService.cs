@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using WarehouseManagementSystem.Business.Interfaces;
 using WarehouseManagementSystem.Core.DTOs;
+using WarehouseManagementSystem.Data;
 using WarehouseManagementSystem.Data.Models;
 using WarehouseManagementSystem.Data.UOW.Interfaces;
 
@@ -12,10 +14,12 @@ namespace WarehouseManagementSystem.Business.Services;
 public class SupplyOrderService : ISupplyOrderService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly WMSDbContext _dbContext;
 
     public SupplyOrderService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
+        _dbContext = new WMSDbContext();
     }
 
     public async Task<IEnumerable<SupplyOrder>> GetAllSupplyOrdersAsync() => 
@@ -24,10 +28,14 @@ public class SupplyOrderService : ISupplyOrderService
     public async Task<SupplyOrder> GetSupplyOrderByIdAsync(int id) => 
         await _unitOfWork.SupplyOrders.GetByIdAsync(id);
 
-    public async Task<List<SupplyOrderDto>> GetAllSupplyOrdersWithDetailsAsync()
+    public async Task<List<SupplyOrderDto>> GetAllSupplyOrdersDetailsAsync()
     {
-        var orders = await _unitOfWork.SupplyOrders
-            .GetAllWithIncludesAsync(o => o.Supplier, o => o.Warehouse, o => o.SupplyOrderDetails);
+        var orders = await _dbContext.SupplyOrders
+        .Include(o => o.Supplier)
+        .Include(o => o.Warehouse)
+        .Include(o => o.SupplyOrderDetails)
+            .ThenInclude(d => d.Item) // Ensures `Item` is loaded
+        .ToListAsync();
 
         return orders.SelectMany(order => order.SupplyOrderDetails.Select(detail => new SupplyOrderDto
         {
@@ -42,7 +50,6 @@ public class SupplyOrderService : ISupplyOrderService
             ExpirationDate = detail.ExpirationDate
         })).ToList();
     }
-
 
     public async Task CreateSupplyOrderAsync(int warehouseId, int supplierId, string orderNumber, DateTime orderDate, List<SupplyOrderDetail> details)
     {
