@@ -8,7 +8,7 @@ namespace WarehouseManagementSystem.Data.UOW;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly WMSDbContext _context;
+    protected readonly WMSDbContext _context;
     public IWarehouseRepository Warehouses { get; }
     public IRepository<Item> Items { get; }
     public IStockItemRepository StockItems { get; }
