@@ -20,9 +20,9 @@ namespace WarehouseManagementSystem.Presenation.Forms
 {
     public partial class ItemsForm : Form
     {
-        private readonly ItemService _itemService;
         private readonly WarehouseService _warehouseService;
         private readonly UnitOfWork _unitOfWork;
+        private readonly ItemService _itemService;
         public ItemsForm()
         {
             InitializeComponent();

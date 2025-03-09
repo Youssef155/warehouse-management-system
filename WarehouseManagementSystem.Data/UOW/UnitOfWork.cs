@@ -8,11 +8,11 @@ namespace WarehouseManagementSystem.Data.UOW;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly WMSDbContext _context;
-    public IRepository<Warehouse> Warehouses { get; }
+    public IWarehouseRepository Warehouses { get; }
     public IRepository<Item> Items { get; }
-    public IRepository<Supplier> Suppliers { get; }
+    public ISupplierRepository Suppliers { get; }
     public IRepository<Customer> Customers { get; }
-    public IRepository<SupplyOrder> SupplyOrders {  get; }
+    public ISupplyOrderRepository SupplyOrders {  get; }
     public IRepository<WithdrawalOrder> WithdrawalOrders { get; }
     public IRepository<StockTransfer> StockTransfers { get; }
     public IStockItemRepository StockItemRepository { get; }
@@ -20,11 +20,11 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(WMSDbContext context)
     {
         _context = context;
-        Warehouses = new Repository<Warehouse>(_context);
+        Warehouses = new WarehouseRepository(_context);
         Items = new Repository<Item>(_context);
-        Suppliers = new Repository<Supplier>(_context);
+        Suppliers = new SupplierRepository(_context);
         Customers = new Repository<Customer>(_context);
-        SupplyOrders = new Repository<SupplyOrder>(_context);
+        SupplyOrders = new SupplyOrderRepository(_context);
         WithdrawalOrders = new Repository<WithdrawalOrder>(_context);
         StockTransfers = new Repository<StockTransfer>(_context);
         StockItemRepository = new StockItemRepository(_context);

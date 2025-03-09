@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WarehouseManagementSystem.Core.DTOs;
 using WarehouseManagementSystem.Data.Models;
 
 namespace WarehouseManagementSystem.Data.Repositories.Interfaces
 {
-    public interface IWarehouseRepository : IRepository<Warehouse>
+    public interface ISupplyOrderRepository : IRepository<SupplyOrder>
     {
-        IEnumerable<WarehouseDto> GetAll();
+        Task<List<SupplyOrder>> GetOrdersBySupplierIdAsync(int supplierId);
     }
 }
