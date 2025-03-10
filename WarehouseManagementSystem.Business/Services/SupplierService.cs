@@ -22,12 +22,21 @@ public class SupplierService : ISupplierService
     public async Task<Supplier> GetSupplierByIdAsync(int id) => 
         await _unitOfWork.Suppliers.GetByIdAsync(id);
 
-    public async Task AddSupplierAsync(string name, string phone, string email, string website)
+    public async Task AddSupplierAsync(string name, string phone, string email, 
+        string fax, string mobile, string website)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Supplier name cannot be empty.");
 
-        var supplier = new Supplier { Name = name, Phone = phone, Email = email, Website = website };
+        var supplier = new Supplier 
+        { 
+            Name = name, 
+            Phone = phone, 
+            Email = email, 
+            Fax = fax,
+            Mobile = mobile,
+            Website = website 
+        };
         await _unitOfWork.Suppliers.AddAsync(supplier);
         await _unitOfWork.SaveAsync();
     }
