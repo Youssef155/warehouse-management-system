@@ -8,7 +8,8 @@ public interface ISupplierService
 {
     Task<IEnumerable<Supplier>> GetAllSuppliersAsync();
     Task<Supplier> GetSupplierByIdAsync(int id);
-    Task AddSupplierAsync(string name, string phone, string email, string website);
+    Task AddSupplierAsync(string name, string phone, string email,
+        string fax, string mobile, string website);
     Task UpdateSupplierAsync(int id, string name, string phone, string email, string website);
     Task DeleteSupplierAsync(int id);
 }

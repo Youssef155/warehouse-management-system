@@ -28,7 +28,7 @@ public partial class WarehouseForm : Form
 
     private async Task LoadWarehouses()
     {
-        var warehouseList = await _unitOfWork.Warehouses.GetAllAsync();
+        var warehouseList = await _warehouseService.GetAllWarehousesAsync();
 
         dgvWarehouses.DataSource = warehouseList;
 
@@ -77,7 +77,7 @@ public partial class WarehouseForm : Form
             {
                 await _warehouseService.UpdateWarehouseAsync(id, txtName.Text, txtAddress.Text, txtManager.Text);
                 MessageBox.Show("Warehouse updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadWarehouses();
+                await LoadWarehouses();
                 ResetFormInput();
             }
             catch (Exception ex)
