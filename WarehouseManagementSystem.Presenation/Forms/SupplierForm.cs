@@ -27,25 +27,11 @@ namespace WarehouseManagementSystem.Presenation.Forms
 
         private async Task LoadSuppliers()
         {
-            var suppliers = _supplierService.GetAllSuppliersAsync();
+            var suppliers = await _supplierService.GetAllSuppliersAsync();
             dgvSupplier.DataSource = null;
             dgvSupplier.DataSource = suppliers;
-        }
 
-        private void SetupDataGridView()
-        {
-            dgvSupplier.AutoGenerateColumns = false;
-
-            dgvSupplier.Columns.Clear();
-
-            dgvSupplier.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id", HeaderText = "Id", Visible = false });
-            dgvSupplier.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Name", HeaderText = "Name" });
-            dgvSupplier.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Phone", HeaderText = "Phone" });
-            dgvSupplier.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Email", HeaderText = "Email" });
-            dgvSupplier.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Mobile", HeaderText = "Mobile" });
-            dgvSupplier.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Fax", HeaderText = "Fax" });
-            dgvSupplier.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Website", HeaderText = "Website" });
-            
+            dgvSupplier.Columns["Id"].Visible = false;
             dgvSupplier.AllowUserToAddRows = false;
             dgvSupplier.AllowUserToDeleteRows = false;
             dgvSupplier.ReadOnly = true;
@@ -64,7 +50,6 @@ namespace WarehouseManagementSystem.Presenation.Forms
         private async void SupplierForm_Load(object sender, EventArgs e)
         {
             await LoadSuppliers();
-            SetupDataGridView();
         }
 
         private async void btnAddSupplier_Click(object sender, EventArgs e)
