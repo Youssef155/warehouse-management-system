@@ -56,6 +56,7 @@
             dgvSupplier.RowHeadersWidth = 51;
             dgvSupplier.Size = new Size(1207, 188);
             dgvSupplier.TabIndex = 0;
+            dgvSupplier.Click += dgvSupplier_Click;
             // 
             // txtSupplierName
             // 
@@ -171,6 +172,7 @@
             btnDeleteSupplier.TabIndex = 14;
             btnDeleteSupplier.Text = "Delete Supplier";
             btnDeleteSupplier.UseVisualStyleBackColor = true;
+            btnDeleteSupplier.Click += btnDeleteSupplier_Click;
             // 
             // btnUpdateSupplier
             // 
@@ -180,6 +182,7 @@
             btnUpdateSupplier.TabIndex = 15;
             btnUpdateSupplier.Text = "Update Supplier";
             btnUpdateSupplier.UseVisualStyleBackColor = true;
+            btnUpdateSupplier.Click += btnUpdateSupplier_Click;
             // 
             // SupplierForm
             // 

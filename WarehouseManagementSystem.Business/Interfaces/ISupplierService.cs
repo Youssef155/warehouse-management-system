@@ -10,6 +10,7 @@ public interface ISupplierService
     Task<Supplier> GetSupplierByIdAsync(int id);
     Task AddSupplierAsync(string name, string phone, string email,
         string fax, string mobile, string website);
-    Task UpdateSupplierAsync(int id, string name, string phone, string email, string website);
+    Task UpdateSupplierAsync(int id, string name, string phone, string email,
+        string fax, string mobile, string website);
     Task DeleteSupplierAsync(int id);
 }

@@ -41,7 +41,8 @@ public class SupplierService : ISupplierService
         await _unitOfWork.SaveAsync();
     }
 
-    public async Task UpdateSupplierAsync(int id, string name, string phone, string email, string website)
+    public async Task UpdateSupplierAsync(int id, string name, string phone, string email,
+        string fax, string mobile, string website)
     {
         var supplier = await _unitOfWork.Suppliers.GetByIdAsync(id);
         if (supplier == null) throw new Exception("Supplier not found.");
