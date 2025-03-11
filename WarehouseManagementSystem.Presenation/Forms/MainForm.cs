@@ -98,6 +98,7 @@ public partial class MainForm : Form
     private void btnCustomer_Click(object sender, EventArgs e)
     {
         ActivateBtn(sender);
+        OpenChildForm(new CustomerForm());
     }
 
     private void btnSupplyOrder_Click(object sender, EventArgs e)

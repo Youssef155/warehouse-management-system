@@ -10,13 +10,14 @@ using System.Windows.Forms;
 using WarehouseManagementSystem.Business.Services;
 using WarehouseManagementSystem.Data;
 using WarehouseManagementSystem.Data.UOW;
+using WarehouseManagementSystem.Data.UOW.Interfaces;
 
 namespace WarehouseManagementSystem.Presenation.Forms;
 
 public partial class WarehouseForm : Form
 {
     private readonly WarehouseService _warehouseService;
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
     public WarehouseForm()
     {
