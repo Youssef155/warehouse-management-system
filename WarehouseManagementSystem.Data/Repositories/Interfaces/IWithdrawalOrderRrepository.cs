@@ -7,6 +7,6 @@ namespace WarehouseManagementSystem.Data.Repositories.Interfaces;
 
 public interface IWithdrawalOrderRepository : IRepository<WithdrawalOrder>
 {
-    IEnumerable<WithdrawalOrder> GetByDateRange(DateTime startDate, DateTime endDate);
-    IEnumerable<WithdrawalOrder> GetByWarehouse(int warehouseId);
+    Task<IEnumerable<WithdrawalOrder>> GetByDateRangeAsync(DateTime startDate, DateTime endDate);
+    Task<IEnumerable<WithdrawalOrder>> GetByWarehouseAsync(int warehouseId);
 }

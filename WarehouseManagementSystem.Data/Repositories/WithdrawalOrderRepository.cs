@@ -15,14 +15,14 @@ public class WithdrawalOrderRepository : Repository<WithdrawalOrder>, IWithdrawa
     {
         _context = context;
     }
-    public IEnumerable<WithdrawalOrder> GetByDateRange(DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<WithdrawalOrder>> GetByDateRangeAsync(DateTime startDate, DateTime endDate)
     {
         return _context.WithdrawalOrders
                        .Where(order => order.OrderDate >= startDate && order.OrderDate <= endDate)
                        .ToList();
     }
 
-    public IEnumerable<WithdrawalOrder> GetByWarehouse(int warehouseId)
+    public async Task<IEnumerable<WithdrawalOrder>> GetByWarehouseAsync(int warehouseId)
     {
         return _context.WithdrawalOrders
                        .Where(order => order.WarehouseId == warehouseId)

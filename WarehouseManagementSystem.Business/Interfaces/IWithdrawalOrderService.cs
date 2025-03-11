@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WarehouseManagementSystem.Core.DTOs;
 using WarehouseManagementSystem.Data.Models;
 
 namespace WarehouseManagementSystem.Business.Interfaces;
@@ -7,7 +8,11 @@ namespace WarehouseManagementSystem.Business.Interfaces;
 
 public interface IWithdrawalOrderService
 {
-    Task<IEnumerable<WithdrawalOrder>> GetAllWithdrawalOrdersAsync();
-    Task<WithdrawalOrder> GetWithdrawalOrderByIdAsync(int id);
-    Task CreateWithdrawalOrderAsync(int warehouseId, int customerId, string orderNumber, DateTime orderDate, List<WithdrawalOrderDetail> details);
+    Task<IEnumerable<WithdrawalOrderDTO>> GetAllWithdrawalOrdersAsync();
+    Task<WithdrawalOrderDTO> GetWithdrawalOrderByIdAsync(int id);
+    Task CreateOrderAsync(WithdrawalOrderDTO orderDto);
+    Task UpdateOrderAsync(WithdrawalOrderDTO orderDto);
+    Task DeleteAsync(int id);
+    Task<IEnumerable<WithdrawalOrderDTO>> GetOrdersByDateRange(DateTime startDate, DateTime endDate);
+    Task<IEnumerable<WithdrawalOrderDTO>> GetOrdersByWarehouse(int warehouseId);
 }
