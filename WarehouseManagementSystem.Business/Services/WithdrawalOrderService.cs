@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WarehouseManagementSystem.Business.Interfaces;
+using WarehouseManagementSystem.Core.DTOs;
 using WarehouseManagementSystem.Data.Models;
 using WarehouseManagementSystem.Data.UOW.Interfaces;
 
@@ -17,27 +18,131 @@ public class WithdrawalOrderService : IWithdrawalOrderService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<WithdrawalOrder>> GetAllWithdrawalOrdersAsync() => 
-        await _unitOfWork.WithdrawalOrders.GetAllAsync();
-
-    public async Task<WithdrawalOrder> GetWithdrawalOrderByIdAsync(int id) =>
-        await _unitOfWork.WithdrawalOrders.GetByIdAsync(id);
-
-    public async Task CreateWithdrawalOrderAsync(int warehouseId, int customerId, string orderNumber, DateTime orderDate, List<WithdrawalOrderDetail> details)
+    public async Task<IEnumerable<WithdrawalOrderDTO>> GetAllWithdrawalOrdersAsync()
     {
-        if (details == null || details.Count == 0)
-            throw new ArgumentException("Withdrawal order must have at least one item.");
-
-        var withdrawalOrder = new WithdrawalOrder
+        var orders = await _unitOfWork.WithdrawalOrders.GetAllAsync();
+        var result = orders.Select(order => new WithdrawalOrderDTO
         {
-            WarehouseId = warehouseId,
-            CustomerId = customerId,
-            OrderNumber = orderNumber,
-            OrderDate = orderDate,
-            WithdrawalOrderDetails = details
+            OrderId = order.Id,
+            OrderDate = order.OrderDate,
+            WarehouseId = order.WarehouseId,
+            WarehouseName = order.Warehouse?.Name,
+            Items = order.WithdrawalOrderDetails.Select(detail => new WithdrawalOrderItemDTO
+            {
+                ItemId = detail.ItemId,
+                ItemName = detail.Item?.Name,
+                Quantity = detail.Quantity
+            }).ToList()
+        });
+
+        return result;
+    }
+
+    public async Task<WithdrawalOrderDTO> GetWithdrawalOrderByIdAsync(int id)
+    {
+        var order = await _unitOfWork.WithdrawalOrders.GetByIdAsync(id);
+        if (order == null) return null;
+
+        var result = new WithdrawalOrderDTO
+        {
+            OrderId = order.Id,
+            OrderDate = order.OrderDate,
+            WarehouseId = order.WarehouseId,
+            WarehouseName = order.Warehouse?.Name,
+            Items = order.WithdrawalOrderDetails.Select(detail => new WithdrawalOrderItemDTO
+            {
+                ItemId = detail.ItemId,
+                ItemName = detail.Item?.Name,
+                Quantity = detail.Quantity
+            }).ToList()
         };
 
-        await _unitOfWork.WithdrawalOrders.AddAsync(withdrawalOrder);
-        await _unitOfWork.SaveAsync();
+        return result;
     }
+
+
+    public async Task CreateOrderAsync(WithdrawalOrderDTO orderDto)
+    {
+        var order = new WithdrawalOrder
+        {
+            OrderDate = orderDto.OrderDate,
+            WarehouseId = orderDto.WarehouseId,
+            WithdrawalOrderDetails = orderDto.Items.Select(item => new WithdrawalOrderDetail
+            {
+                ItemId = item.ItemId,
+                Quantity = item.Quantity
+            }).ToList()
+        };
+
+        await _unitOfWork.WithdrawalOrders.AddAsync(order);
+    }
+
+    public async Task UpdateOrderAsync(WithdrawalOrderDTO orderDto)
+    {
+        var existingOrder = await _unitOfWork.WithdrawalOrders.GetByIdAsync(orderDto.OrderId);
+        if (existingOrder == null) return;
+
+        existingOrder.OrderDate = orderDto.OrderDate;
+        existingOrder.WarehouseId = orderDto.WarehouseId;
+
+        // Clear existing details and add updated ones
+        existingOrder.WithdrawalOrderDetails.Clear();
+        foreach (var item in orderDto.Items)
+        {
+            existingOrder.WithdrawalOrderDetails.Add(new WithdrawalOrderDetail
+            {
+                ItemId = item.ItemId,
+                Quantity = item.Quantity
+            });
+        }
+
+        await _unitOfWork.WithdrawalOrders.UpdateAsync(existingOrder);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var order = await _unitOfWork.WithdrawalOrders.GetByIdAsync(id);
+        await _unitOfWork.WithdrawalOrders.DeleteAsync(order);
+    }
+
+    public async Task<IEnumerable<WithdrawalOrderDTO>> GetOrdersByDateRange(DateTime startDate, DateTime endDate)
+    {
+        var orders = await _unitOfWork.WithdrawalOrders.GetByDateRangeAsync(startDate, endDate);
+        var result = orders.Select(order => new WithdrawalOrderDTO
+        {
+            OrderId = order.Id,
+            OrderDate = order.OrderDate,
+            WarehouseId = order.WarehouseId,
+            WarehouseName = order.Warehouse?.Name,
+            Items = order.WithdrawalOrderDetails.Select(detail => new WithdrawalOrderItemDTO
+            {
+                ItemId = detail.ItemId,
+                ItemName = detail.Item?.Name,
+                Quantity = detail.Quantity
+            }).ToList()
+        });
+
+        return result;
+    }
+
+    public async Task<IEnumerable<WithdrawalOrderDTO>> GetOrdersByWarehouse(int warehouseId)
+    {
+        var orders = await _unitOfWork.WithdrawalOrders.GetByWarehouseAsync(warehouseId);
+        var result = orders.Select(order => new WithdrawalOrderDTO
+        {
+            OrderId = order.Id,
+            OrderDate = order.OrderDate,
+            WarehouseId = order.WarehouseId,
+            WarehouseName = order.Warehouse?.Name,
+            Items = order.WithdrawalOrderDetails.Select(detail => new WithdrawalOrderItemDTO
+            {
+                ItemId = detail.ItemId,
+                ItemName = detail.Item?.Name,
+                Quantity = detail.Quantity
+            }).ToList()
+        });
+
+        return result;
+    }
+
 }

@@ -12,9 +12,9 @@ public interface IUnitOfWork : IDisposable
     public ISupplierRepository Suppliers { get; }
     public IRepository<Customer> Customers { get; }
     public ISupplyOrderRepository SupplyOrders { get; }
-    public IRepository<WithdrawalOrder> WithdrawalOrders { get; }
     public IRepository<StockTransfer> StockTransfers { get; }
     public IStockItemRepository StockItemRepository { get; }
+    public IWithdrawalOrderRepository WithdrawalOrders { get; }
     Task<IDbContextTransaction> BeginTransactionAsync();
     Task SaveAsync();
 }

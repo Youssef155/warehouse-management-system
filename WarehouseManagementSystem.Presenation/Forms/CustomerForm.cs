@@ -33,7 +33,9 @@ public partial class CustomerForm : Form
 
         dgvCustomers.DataSource = customers;
         dgvCustomers.Columns["Id"].Visible = false;
+        dgvCustomers.Columns["WithdrawalOrders"].Visible = false;
         dgvCustomers.AllowUserToAddRows = false;
+        dgvCustomers.AllowUserToDeleteRows = false;
         dgvCustomers.ReadOnly = true;
     }
 
