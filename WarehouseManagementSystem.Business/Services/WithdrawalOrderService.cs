@@ -63,6 +63,18 @@ public class WithdrawalOrderService : IWithdrawalOrderService
 
     public async Task CreateOrderAsync(WithdrawalOrderDTO orderDto)
     {
+        foreach (var item in orderDto.Items)
+        {
+            var stockItem = await _unitOfWork.StockItems.GetByIdAsync(item.ItemId);
+
+            if (stockItem == null || stockItem.Quantity < item.Quantity)
+                throw new InvalidOperationException($"Insufficient quantity for item: {item.ItemName}");
+
+            // Deduct the quantity
+            stockItem.Quantity -= item.Quantity;
+            await _unitOfWork.StockItems.UpdateAsync(stockItem);
+        }
+
         var order = new WithdrawalOrder
         {
             OrderDate = orderDto.OrderDate,
