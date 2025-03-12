@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
     public ISupplierRepository Suppliers { get; }
     public IRepository<Customer> Customers { get; }
     public ISupplyOrderRepository SupplyOrders {  get; }
+    public IRepository<SupplyOrderDetail> SupplyOrderDetails { get; }
     public IWithdrawalOrderRepository WithdrawalOrders { get; }
     public IRepository<StockTransfer> StockTransfers { get; }
     public IStockItemRepository StockItemRepository { get; }
@@ -27,10 +28,11 @@ public class UnitOfWork : IUnitOfWork
         Suppliers = new SupplierRepository(_context);
         Customers = new Repository<Customer>(_context);
         SupplyOrders = new SupplyOrderRepository(_context);
+        SupplyOrderDetails = new Repository<SupplyOrderDetail>(_context);
         WithdrawalOrders = new WithdrawalOrderRepository(_context);
         StockTransfers = new Repository<StockTransfer>(_context);
         StockItemRepository = new StockItemRepository(_context);
-        StockItems = new StockItemRepository(context);
+        StockItems = new StockItemRepository(_context);
     }
 
     public async Task<IDbContextTransaction> BeginTransactionAsync()

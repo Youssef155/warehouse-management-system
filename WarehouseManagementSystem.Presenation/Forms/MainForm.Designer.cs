@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             SidePanal = new Panel();
+            iconButton1 = new FontAwesome.Sharp.IconButton();
             btnWarehousRepot = new FontAwesome.Sharp.IconButton();
             btnStockTransfer = new FontAwesome.Sharp.IconButton();
             btnWithdrawalOrder = new FontAwesome.Sharp.IconButton();
@@ -41,7 +42,7 @@
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
             panelContainer = new Panel();
-            iconButton1 = new FontAwesome.Sharp.IconButton();
+            btnItemsInWarehousePeriodReport = new FontAwesome.Sharp.IconButton();
             SidePanal.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -50,6 +51,7 @@
             // SidePanal
             // 
             SidePanal.BackColor = Color.Black;
+            SidePanal.Controls.Add(btnItemsInWarehousePeriodReport);
             SidePanal.Controls.Add(iconButton1);
             SidePanal.Controls.Add(btnWarehousRepot);
             SidePanal.Controls.Add(btnStockTransfer);
@@ -65,6 +67,28 @@
             SidePanal.Name = "SidePanal";
             SidePanal.Size = new Size(220, 785);
             SidePanal.TabIndex = 0;
+            // 
+            // iconButton1
+            // 
+            iconButton1.Dock = DockStyle.Top;
+            iconButton1.FlatAppearance.BorderSize = 0;
+            iconButton1.FlatStyle = FlatStyle.Flat;
+            iconButton1.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            iconButton1.ForeColor = Color.WhiteSmoke;
+            iconButton1.IconChar = FontAwesome.Sharp.IconChar.FilePdf;
+            iconButton1.IconColor = Color.WhiteSmoke;
+            iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton1.ImageAlign = ContentAlignment.MiddleLeft;
+            iconButton1.Location = new Point(0, 620);
+            iconButton1.Name = "iconButton1";
+            iconButton1.Padding = new Padding(10, 0, 20, 0);
+            iconButton1.Size = new Size(220, 60);
+            iconButton1.TabIndex = 9;
+            iconButton1.Text = "Warehouses Items Report";
+            iconButton1.TextAlign = ContentAlignment.MiddleLeft;
+            iconButton1.TextImageRelation = TextImageRelation.ImageBeforeText;
+            iconButton1.UseVisualStyleBackColor = true;
+            iconButton1.Click += iconButton1_Click;
             // 
             // btnWarehousRepot
             // 
@@ -270,27 +294,27 @@
             panelContainer.Size = new Size(1200, 785);
             panelContainer.TabIndex = 1;
             // 
-            // iconButton1
+            // btnItemsInWarehousePeriodReport
             // 
-            iconButton1.Dock = DockStyle.Top;
-            iconButton1.FlatAppearance.BorderSize = 0;
-            iconButton1.FlatStyle = FlatStyle.Flat;
-            iconButton1.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            iconButton1.ForeColor = Color.WhiteSmoke;
-            iconButton1.IconChar = FontAwesome.Sharp.IconChar.FilePdf;
-            iconButton1.IconColor = Color.WhiteSmoke;
-            iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton1.ImageAlign = ContentAlignment.MiddleLeft;
-            iconButton1.Location = new Point(0, 620);
-            iconButton1.Name = "iconButton1";
-            iconButton1.Padding = new Padding(10, 0, 20, 0);
-            iconButton1.Size = new Size(220, 60);
-            iconButton1.TabIndex = 9;
-            iconButton1.Text = "Warehouses Items Report";
-            iconButton1.TextAlign = ContentAlignment.MiddleLeft;
-            iconButton1.TextImageRelation = TextImageRelation.ImageBeforeText;
-            iconButton1.UseVisualStyleBackColor = true;
-            iconButton1.Click += iconButton1_Click;
+            btnItemsInWarehousePeriodReport.Dock = DockStyle.Top;
+            btnItemsInWarehousePeriodReport.FlatAppearance.BorderSize = 0;
+            btnItemsInWarehousePeriodReport.FlatStyle = FlatStyle.Flat;
+            btnItemsInWarehousePeriodReport.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnItemsInWarehousePeriodReport.ForeColor = Color.WhiteSmoke;
+            btnItemsInWarehousePeriodReport.IconChar = FontAwesome.Sharp.IconChar.FilePdf;
+            btnItemsInWarehousePeriodReport.IconColor = Color.WhiteSmoke;
+            btnItemsInWarehousePeriodReport.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnItemsInWarehousePeriodReport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnItemsInWarehousePeriodReport.Location = new Point(0, 680);
+            btnItemsInWarehousePeriodReport.Name = "btnItemsInWarehousePeriodReport";
+            btnItemsInWarehousePeriodReport.Padding = new Padding(10, 0, 20, 0);
+            btnItemsInWarehousePeriodReport.Size = new Size(220, 79);
+            btnItemsInWarehousePeriodReport.TabIndex = 10;
+            btnItemsInWarehousePeriodReport.Text = "Items In Warehouse Period Report";
+            btnItemsInWarehousePeriodReport.TextAlign = ContentAlignment.MiddleLeft;
+            btnItemsInWarehousePeriodReport.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnItemsInWarehousePeriodReport.UseVisualStyleBackColor = true;
+            btnItemsInWarehousePeriodReport.Click += btnItemsInWarehousePeriodReport_Click;
             // 
             // MainForm
             // 
@@ -324,5 +348,6 @@
         private Panel panelContainer;
         private FontAwesome.Sharp.IconButton btnWarehousRepot;
         private FontAwesome.Sharp.IconButton iconButton1;
+        private FontAwesome.Sharp.IconButton btnItemsInWarehousePeriodReport;
     }
 }

@@ -12,6 +12,7 @@ public interface IUnitOfWork : IDisposable
     public ISupplierRepository Suppliers { get; }
     public IRepository<Customer> Customers { get; }
     public ISupplyOrderRepository SupplyOrders { get; }
+    public IRepository<SupplyOrderDetail> SupplyOrderDetails { get; }
     public IRepository<StockTransfer> StockTransfers { get; }
     public IStockItemRepository StockItemRepository { get; }
     public IWithdrawalOrderRepository WithdrawalOrders { get; }
