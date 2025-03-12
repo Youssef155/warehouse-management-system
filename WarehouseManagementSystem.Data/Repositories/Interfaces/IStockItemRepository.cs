@@ -12,4 +12,5 @@ public interface IStockItemRepository : IRepository<StockItem>
     Task<List<StockItem>> GetStockWithItemAndWarehouseAsync();
     Task<List<StockItem>> GetItemsByWarehousesAsync(List<int> warehouseIds);
     IQueryable<StockItem> GetQueryable();
+    Task<IEnumerable<StockItem>> GetStockItemsWithItemAsync(int warehouseId);
 }

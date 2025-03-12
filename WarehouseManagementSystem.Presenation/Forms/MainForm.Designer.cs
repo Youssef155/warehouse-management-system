@@ -40,6 +40,7 @@
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
             panelContainer = new Panel();
+            btnWarehousRepot = new FontAwesome.Sharp.IconButton();
             SidePanal.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -48,6 +49,7 @@
             // SidePanal
             // 
             SidePanal.BackColor = Color.Black;
+            SidePanal.Controls.Add(btnWarehousRepot);
             SidePanal.Controls.Add(btnStockTransfer);
             SidePanal.Controls.Add(btnWithdrawalOrder);
             SidePanal.Controls.Add(btnSupplyOrder);
@@ -59,7 +61,7 @@
             SidePanal.Dock = DockStyle.Left;
             SidePanal.Location = new Point(0, 0);
             SidePanal.Name = "SidePanal";
-            SidePanal.Size = new Size(220, 747);
+            SidePanal.Size = new Size(220, 785);
             SidePanal.TabIndex = 0;
             // 
             // btnStockTransfer
@@ -91,7 +93,7 @@
             btnWithdrawalOrder.FlatStyle = FlatStyle.Flat;
             btnWithdrawalOrder.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnWithdrawalOrder.ForeColor = Color.WhiteSmoke;
-            btnWithdrawalOrder.IconChar = FontAwesome.Sharp.IconChar.ClipboardList;
+            btnWithdrawalOrder.IconChar = FontAwesome.Sharp.IconChar.AnglesLeft;
             btnWithdrawalOrder.IconColor = Color.WhiteSmoke;
             btnWithdrawalOrder.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnWithdrawalOrder.ImageAlign = ContentAlignment.MiddleLeft;
@@ -113,7 +115,7 @@
             btnSupplyOrder.FlatStyle = FlatStyle.Flat;
             btnSupplyOrder.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSupplyOrder.ForeColor = Color.WhiteSmoke;
-            btnSupplyOrder.IconChar = FontAwesome.Sharp.IconChar.ClipboardList;
+            btnSupplyOrder.IconChar = FontAwesome.Sharp.IconChar.AnglesRight;
             btnSupplyOrder.IconColor = Color.WhiteSmoke;
             btnSupplyOrder.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSupplyOrder.ImageAlign = ContentAlignment.MiddleLeft;
@@ -241,14 +243,36 @@
             panelContainer.Dock = DockStyle.Fill;
             panelContainer.Location = new Point(220, 0);
             panelContainer.Name = "panelContainer";
-            panelContainer.Size = new Size(1200, 747);
+            panelContainer.Size = new Size(1200, 785);
             panelContainer.TabIndex = 1;
+            // 
+            // btnWarehousRepot
+            // 
+            btnWarehousRepot.Dock = DockStyle.Top;
+            btnWarehousRepot.FlatAppearance.BorderSize = 0;
+            btnWarehousRepot.FlatStyle = FlatStyle.Flat;
+            btnWarehousRepot.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnWarehousRepot.ForeColor = Color.WhiteSmoke;
+            btnWarehousRepot.IconChar = FontAwesome.Sharp.IconChar.FilePdf;
+            btnWarehousRepot.IconColor = Color.WhiteSmoke;
+            btnWarehousRepot.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnWarehousRepot.ImageAlign = ContentAlignment.MiddleLeft;
+            btnWarehousRepot.Location = new Point(0, 560);
+            btnWarehousRepot.Name = "btnWarehousRepot";
+            btnWarehousRepot.Padding = new Padding(10, 0, 20, 0);
+            btnWarehousRepot.Size = new Size(220, 60);
+            btnWarehousRepot.TabIndex = 8;
+            btnWarehousRepot.Text = "Warehouse State Report";
+            btnWarehousRepot.TextAlign = ContentAlignment.MiddleLeft;
+            btnWarehousRepot.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnWarehousRepot.UseVisualStyleBackColor = true;
+            btnWarehousRepot.Click += btnWarehousRepot_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1420, 747);
+            ClientSize = new Size(1420, 785);
             Controls.Add(panelContainer);
             Controls.Add(SidePanal);
             MaximizeBox = false;
@@ -274,5 +298,6 @@
         private FontAwesome.Sharp.IconButton btnItems;
         private PictureBox pictureBox1;
         private Panel panelContainer;
+        private FontAwesome.Sharp.IconButton btnWarehousRepot;
     }
 }

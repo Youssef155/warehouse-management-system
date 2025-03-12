@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using WarehouseManagementSystem.Business.Interfaces;
 using WarehouseManagementSystem.Data.Models;
 using WarehouseManagementSystem.Data.UOW.Interfaces;
@@ -59,5 +60,29 @@ public class WarehouseService : IWarehouseService
 
         await _unitOfWork.Warehouses.DeleteAsync(warehouse);
         await _unitOfWork.SaveAsync();
+    }
+
+    // report
+    public async Task<DataTable> GetWarehouseStatusReport(int warehouseId)
+    {
+        var dataTable = new DataTable();
+        dataTable.Columns.Add("ItemName");
+        dataTable.Columns.Add("Quantity");
+        dataTable.Columns.Add("ProductionDate");
+        dataTable.Columns.Add("ExpirationDate");
+
+        var stockItems = await _unitOfWork.StockItemRepository.GetStockItemsWithItemAsync(warehouseId);
+
+        foreach (var item in stockItems)
+        {
+            dataTable.Rows.Add(
+                item?.Item?.Name ?? "Unknown",
+                item.Quantity,
+                item.ProductionDate.ToShortDateString(),
+                item.ExpirationDate.ToShortDateString()
+            );
+        }
+
+        return dataTable;
     }
 }
