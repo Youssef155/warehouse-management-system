@@ -135,4 +135,10 @@ public partial class MainForm : Form
         ActivateBtn(sender);
         OpenChildForm(new ItemsInWarehousePeriodReportForm());
     }
+
+    private void btnItemsCloseToExpiration_Click(object sender, EventArgs e)
+    {
+        ActivateBtn(sender);
+        OpenChildForm(new ItemsCloseToExpirationReport());
+    }
 }

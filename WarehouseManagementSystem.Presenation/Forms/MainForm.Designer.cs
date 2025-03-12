@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             SidePanal = new Panel();
+            btnItemsInWarehousePeriodReport = new FontAwesome.Sharp.IconButton();
             iconButton1 = new FontAwesome.Sharp.IconButton();
             btnWarehousRepot = new FontAwesome.Sharp.IconButton();
             btnStockTransfer = new FontAwesome.Sharp.IconButton();
@@ -42,7 +43,7 @@
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
             panelContainer = new Panel();
-            btnItemsInWarehousePeriodReport = new FontAwesome.Sharp.IconButton();
+            btnItemsCloseToExpiration = new FontAwesome.Sharp.IconButton();
             SidePanal.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -51,6 +52,7 @@
             // SidePanal
             // 
             SidePanal.BackColor = Color.Black;
+            SidePanal.Controls.Add(btnItemsCloseToExpiration);
             SidePanal.Controls.Add(btnItemsInWarehousePeriodReport);
             SidePanal.Controls.Add(iconButton1);
             SidePanal.Controls.Add(btnWarehousRepot);
@@ -65,8 +67,30 @@
             SidePanal.Dock = DockStyle.Left;
             SidePanal.Location = new Point(0, 0);
             SidePanal.Name = "SidePanal";
-            SidePanal.Size = new Size(220, 785);
+            SidePanal.Size = new Size(220, 885);
             SidePanal.TabIndex = 0;
+            // 
+            // btnItemsInWarehousePeriodReport
+            // 
+            btnItemsInWarehousePeriodReport.Dock = DockStyle.Top;
+            btnItemsInWarehousePeriodReport.FlatAppearance.BorderSize = 0;
+            btnItemsInWarehousePeriodReport.FlatStyle = FlatStyle.Flat;
+            btnItemsInWarehousePeriodReport.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnItemsInWarehousePeriodReport.ForeColor = Color.WhiteSmoke;
+            btnItemsInWarehousePeriodReport.IconChar = FontAwesome.Sharp.IconChar.FilePdf;
+            btnItemsInWarehousePeriodReport.IconColor = Color.WhiteSmoke;
+            btnItemsInWarehousePeriodReport.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnItemsInWarehousePeriodReport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnItemsInWarehousePeriodReport.Location = new Point(0, 680);
+            btnItemsInWarehousePeriodReport.Name = "btnItemsInWarehousePeriodReport";
+            btnItemsInWarehousePeriodReport.Padding = new Padding(10, 0, 20, 0);
+            btnItemsInWarehousePeriodReport.Size = new Size(220, 79);
+            btnItemsInWarehousePeriodReport.TabIndex = 10;
+            btnItemsInWarehousePeriodReport.Text = "Items In Warehouse Period Report";
+            btnItemsInWarehousePeriodReport.TextAlign = ContentAlignment.MiddleLeft;
+            btnItemsInWarehousePeriodReport.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnItemsInWarehousePeriodReport.UseVisualStyleBackColor = true;
+            btnItemsInWarehousePeriodReport.Click += btnItemsInWarehousePeriodReport_Click;
             // 
             // iconButton1
             // 
@@ -291,36 +315,36 @@
             panelContainer.Dock = DockStyle.Fill;
             panelContainer.Location = new Point(220, 0);
             panelContainer.Name = "panelContainer";
-            panelContainer.Size = new Size(1200, 785);
+            panelContainer.Size = new Size(1200, 885);
             panelContainer.TabIndex = 1;
             // 
-            // btnItemsInWarehousePeriodReport
+            // btnItemsCloseToExpiration
             // 
-            btnItemsInWarehousePeriodReport.Dock = DockStyle.Top;
-            btnItemsInWarehousePeriodReport.FlatAppearance.BorderSize = 0;
-            btnItemsInWarehousePeriodReport.FlatStyle = FlatStyle.Flat;
-            btnItemsInWarehousePeriodReport.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnItemsInWarehousePeriodReport.ForeColor = Color.WhiteSmoke;
-            btnItemsInWarehousePeriodReport.IconChar = FontAwesome.Sharp.IconChar.FilePdf;
-            btnItemsInWarehousePeriodReport.IconColor = Color.WhiteSmoke;
-            btnItemsInWarehousePeriodReport.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnItemsInWarehousePeriodReport.ImageAlign = ContentAlignment.MiddleLeft;
-            btnItemsInWarehousePeriodReport.Location = new Point(0, 680);
-            btnItemsInWarehousePeriodReport.Name = "btnItemsInWarehousePeriodReport";
-            btnItemsInWarehousePeriodReport.Padding = new Padding(10, 0, 20, 0);
-            btnItemsInWarehousePeriodReport.Size = new Size(220, 79);
-            btnItemsInWarehousePeriodReport.TabIndex = 10;
-            btnItemsInWarehousePeriodReport.Text = "Items In Warehouse Period Report";
-            btnItemsInWarehousePeriodReport.TextAlign = ContentAlignment.MiddleLeft;
-            btnItemsInWarehousePeriodReport.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnItemsInWarehousePeriodReport.UseVisualStyleBackColor = true;
-            btnItemsInWarehousePeriodReport.Click += btnItemsInWarehousePeriodReport_Click;
+            btnItemsCloseToExpiration.Dock = DockStyle.Top;
+            btnItemsCloseToExpiration.FlatAppearance.BorderSize = 0;
+            btnItemsCloseToExpiration.FlatStyle = FlatStyle.Flat;
+            btnItemsCloseToExpiration.Font = new Font("Century Gothic", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnItemsCloseToExpiration.ForeColor = Color.WhiteSmoke;
+            btnItemsCloseToExpiration.IconChar = FontAwesome.Sharp.IconChar.FilePdf;
+            btnItemsCloseToExpiration.IconColor = Color.WhiteSmoke;
+            btnItemsCloseToExpiration.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnItemsCloseToExpiration.ImageAlign = ContentAlignment.MiddleLeft;
+            btnItemsCloseToExpiration.Location = new Point(0, 759);
+            btnItemsCloseToExpiration.Name = "btnItemsCloseToExpiration";
+            btnItemsCloseToExpiration.Padding = new Padding(10, 0, 20, 0);
+            btnItemsCloseToExpiration.Size = new Size(220, 60);
+            btnItemsCloseToExpiration.TabIndex = 11;
+            btnItemsCloseToExpiration.Text = "Items Close To Expiration";
+            btnItemsCloseToExpiration.TextAlign = ContentAlignment.MiddleLeft;
+            btnItemsCloseToExpiration.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnItemsCloseToExpiration.UseVisualStyleBackColor = true;
+            btnItemsCloseToExpiration.Click += btnItemsCloseToExpiration_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1420, 785);
+            ClientSize = new Size(1420, 885);
             Controls.Add(panelContainer);
             Controls.Add(SidePanal);
             MaximizeBox = false;
@@ -349,5 +373,6 @@
         private FontAwesome.Sharp.IconButton btnWarehousRepot;
         private FontAwesome.Sharp.IconButton iconButton1;
         private FontAwesome.Sharp.IconButton btnItemsInWarehousePeriodReport;
+        private FontAwesome.Sharp.IconButton btnItemsCloseToExpiration;
     }
 }

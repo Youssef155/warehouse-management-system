@@ -1,0 +1,3 @@
+﻿namespace WarehouseManagementSystem.Presenation.ReportDatasets
+{
+}
