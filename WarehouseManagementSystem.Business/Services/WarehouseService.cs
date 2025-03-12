@@ -85,4 +85,32 @@ public class WarehouseService : IWarehouseService
 
         return dataTable;
     }
+
+    public async Task<DataTable> GetItemsReport(List<int> warehouseIds)
+    {
+        var dataTable = new DataTable();
+        dataTable.Columns.Add("WarehouseName");
+        dataTable.Columns.Add("ItemName");
+        dataTable.Columns.Add("Quantity");
+        dataTable.Columns.Add("ProductionDate");
+        dataTable.Columns.Add("ExpirationDate");
+
+        var stockItems = await _unitOfWork.StockItems.GetAllWithIncludesAsync(si => si.Item, si => si.Warehouse);
+
+        // Filter the stock items based on the selected warehouse IDs
+        var filteredStockItems = stockItems.Where(si => warehouseIds.Contains(si.WarehouseId)).ToList();
+
+        foreach (var item in stockItems)
+        {
+            string warehouseName = item?.Warehouse?.Name ?? "Unknown";
+            string itemName = item?.Item?.Name ?? "Unknown";
+            int quantity = item?.Quantity ?? 0;
+            string productionDate = item?.ProductionDate.ToShortDateString() ?? "N/A";
+            string expirationDate = item?.ExpirationDate.ToShortDateString() ?? "N/A";
+
+            dataTable.Rows.Add(warehouseName, itemName, quantity, productionDate, expirationDate);
+        }
+
+        return dataTable;
+    }
 }

@@ -123,4 +123,10 @@ public partial class MainForm : Form
         ActivateBtn(sender);
         OpenChildForm(new WarehouseStateReportForm());
     }
+
+    private void iconButton1_Click(object sender, EventArgs e)
+    {
+        ActivateBtn(sender);
+        OpenChildForm(new WarehousesItemsReportForm());
+    }
 }

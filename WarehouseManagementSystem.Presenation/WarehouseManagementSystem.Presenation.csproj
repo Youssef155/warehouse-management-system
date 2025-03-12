@@ -25,6 +25,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="ReportDatasets\WarehousesItemsDataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WarehousesItemsDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Update="ReportDatasets\WarehouseStatusDataSet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -40,6 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ReportDatasets\WarehousesItemsDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>WarehousesItemsDataSet.Designer.cs</LastGenOutput>
+    </None>
     <None Update="ReportDatasets\WarehouseStatusDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>WarehouseStatusDataSet.Designer.cs</LastGenOutput>
