@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using WarehouseManagementSystem.Business.Interfaces;
 using WarehouseManagementSystem.Core.DTOs;
 using WarehouseManagementSystem.Data.Models;
@@ -176,4 +177,41 @@ public class ItemService : IItemService
         await _unitOfWork.Items.DeleteAsync(item);
         await _unitOfWork.SaveAsync();
     }
+
+    public async Task<DataTable> GetItemsCloseToExpirationAsync(int daysThreshold)
+    {
+        var dataTable = new DataTable();
+        dataTable.Columns.Add("ItemName");
+        dataTable.Columns.Add("WarehouseName");
+        dataTable.Columns.Add("Quantity");
+        dataTable.Columns.Add("ProductionDate");
+        dataTable.Columns.Add("ExpirationDate");
+        dataTable.Columns.Add("DaysUntilExpiration");
+
+        var currentDate = DateTime.Now;
+
+        var stockItems = await _unitOfWork.StockItemRepository
+            .GetAllWithIncludesAsync( si => si.Item, si => si.Warehouse);
+
+        var filteredItems = stockItems
+            .Where(si => (si.ExpirationDate - currentDate).TotalDays <= daysThreshold)
+            .ToList();
+
+        foreach (var item in filteredItems)
+        {
+            var daysUntilExpiration = (item.ExpirationDate - currentDate).Days;
+
+            dataTable.Rows.Add(
+                item.Item.Name,
+                item.Warehouse.Name,
+                item.Quantity,
+                item.ProductionDate.ToShortDateString(),
+                item.ExpirationDate.ToShortDateString(),
+                daysUntilExpiration
+            );
+        }
+
+        return dataTable;
+    }
+
 }

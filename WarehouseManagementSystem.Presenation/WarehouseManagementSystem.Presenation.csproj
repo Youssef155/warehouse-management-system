@@ -25,6 +25,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="ReportDatasets\ItemsCloseToExpirationDataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ItemsCloseToExpirationDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Update="ReportDatasets\ItemsInWarehousePeriodDataSet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -50,6 +55,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ReportDatasets\ItemsCloseToExpirationDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ItemsCloseToExpirationDataSet.Designer.cs</LastGenOutput>
+    </None>
     <None Update="ReportDatasets\ItemsInWarehousePeriodDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ItemsInWarehousePeriodDataSet.Designer.cs</LastGenOutput>
