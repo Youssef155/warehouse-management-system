@@ -65,7 +65,7 @@ public partial class MainForm : Form
 
     private void OpenChildForm(Form child)
     {
-        if(currentChildForm != null)
+        if (currentChildForm != null)
         {
             panelContainer.Controls.Clear();
         }
@@ -116,5 +116,23 @@ public partial class MainForm : Form
     {
         ActivateBtn(sender);
         OpenChildForm(new StockTransferForm());
+    }
+
+    private void btnWarehousRepot_Click(object sender, EventArgs e)
+    {
+        ActivateBtn(sender);
+        OpenChildForm(new WarehouseStateReportForm());
+    }
+
+    private void iconButton1_Click(object sender, EventArgs e)
+    {
+        ActivateBtn(sender);
+        OpenChildForm(new WarehousesItemsReportForm());
+    }
+
+    private void btnItemsInWarehousePeriodReport_Click(object sender, EventArgs e)
+    {
+        ActivateBtn(sender);
+        OpenChildForm(new ItemsInWarehousePeriodReportForm());
     }
 }

@@ -39,4 +39,12 @@ public class StockItemRepository : Repository<StockItem>, IStockItemRepository
             .Include(s => s.Warehouse) // Load related Warehouse
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<StockItem>> GetStockItemsWithItemAsync(int warehouseId)
+    {
+        return await _context.StockItems
+            .Include(si => si.Item)
+            .Where(si => si.WarehouseId == warehouseId)
+            .ToListAsync();
+    }
 }
